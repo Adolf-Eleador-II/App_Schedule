@@ -10,7 +10,6 @@ import LessonPage from './src/page/LessonPage';
 import Notifications from './src/notification/Notifications';
 
 import { ScheduleWidget } from './src/widget/ScheduleWidget';
-import { WidgetPreviewScreen } from './src/widget/WidgetPreviewScreen';
 import { WidgetPreview } from 'react-native-android-widget';
  
 import { withExpoSnack } from 'nativewind';
