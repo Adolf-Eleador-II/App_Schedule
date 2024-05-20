@@ -1,205 +1,106 @@
 import React from 'react';
 import { FlexWidget, IconWidget, ListWidget, TextWidget } from 'react-native-android-widget';
 
-interface CounterWidgetProps {
-  count: number;
+interface Lesson {
+  // id: number;
+  period: number;
+  day: number;
+  week: number;
+  time: [ string, string ];
+  name: string;
+  auditorium: string;
+  teacher: string;
 }
 
-export function ScheduleWidget({ count = 0 }: CounterWidgetProps) {
-  return (
-    <FlexWidget
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        height: 'match_parent',
-        width: 'match_parent',
-        borderRadius: 32,
-        flex: 1,
-        flexDirection: 'row',
-        flexGap: 48,
-      }}
-    >
-      <FlexWidget
-        style={{
-          height: 'wrap_content',
-          width: 48,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        clickAction="DECREMENT"
-        clickActionData={{ value: count }}
-      >
-        <TextWidget style={{ fontSize: 48 }} text="-" />
-      </FlexWidget>
-      <TextWidget style={{ fontSize: 48 }} text={`${count}`} />
-      <FlexWidget
-        style={{
-          height: 'wrap_content',
-          width: 48,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        clickAction="INCREMENT"
-        clickActionData={{ value: count }}
-      >
-        <TextWidget style={{ fontSize: 48 }} text="+" />
-      </FlexWidget>
-    </FlexWidget>
-  );
+interface ScheduleWidgetProps {
+  dayName: string,
+  lessons?: Lesson[]
 }
 
-
-
-/*
-export function ScheduleWidget({ archivedIndex = 1 }: ListDemoWidgetProps) {
+export function ScheduleWidget({ lessons = [], dayName }: ScheduleWidgetProps) {
   return (
-    <FlexWidget
-      style={{
-        height: 'match_parent',
-        width: 'match_parent',
-        backgroundColor: '#1F3529',
-        flexDirection: 'column',
-        paddingHorizontal: 16,
-        paddingTop: 16,
-        borderRadius: 16,
-      }}
-    >
-      <FlexWidget
+      <ListWidget
+        style={{ backgroundColor: '#666', height: 'match_parent', width: 'match_parent' }}
+      >
+      <TextWidget text={`${dayName}`}
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
           width: 'match_parent',
-          marginBottom: 16,
-        }}
-      >
-        <TextWidget
-          text="Inbox (2)"
-          style={{
-            fontSize: 16,
-            fontWeight: '500',
-            color: '#fff',
-          }}
-        />
-        <IconWidget
-          icon="edit"
-          size={20}
-          clickAction="COMPOSE"
-          font="material_outlined"
-          style={{
-            color: '#000',
-            backgroundColor: '#AAF2CC',
-            padding: 8,
-            borderRadius: 12,
-          }}
-        />
-      </FlexWidget>
-
-      <CollectionData archivedIndex={archivedIndex} />
-    </FlexWidget>
-  );
-}
-
-function CollectionData({ archivedIndex }: ListDemoWidgetProps) {
-  return (
-    <ListWidget
-      style={{
-        height: 'match_parent',
-        width: 'match_parent',
-        backgroundColor: '#1F3529',
-      }}
-    >
-      {Array.from({ length: 15 }).map((_, i) => (
-        <FlexWidget
-          style={{
-            width: 'match_parent',
-            alignItems: 'center',
-            flexDirection: 'row',
-          }}
-          key={i}
-          clickAction="OPEN_URI"
-          clickActionData={{
-            uri: `androidwidgetexample://list/list-demo/${i + 1}`,
-          }}
-        >
-          <FlexWidget
+          textAlign: 'center',
+          backgroundColor: '#aaa',
+          color: '#666'
+        }}/>
+        {lessons.map((lesson: Lesson, i: number) => (
+          <FlexWidget key={i}
             style={{
               width: 'match_parent',
-              backgroundColor: '#4D6357',
               alignItems: 'center',
               flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingVertical: 4,
-              paddingHorizontal: 8,
-              marginVertical: 4,
-              borderRadius: 16,
-            }}
-          >
-            <FlexWidget
-              style={{
-                flexDirection: 'column',
-              }}
-            >
-              <TextWidget
-                text="Stefan Aleksovski"
-                style={{
-                  fontSize: 16,
-                  color: '#ffffff',
-                  fontWeight: '500',
-                  fontFamily: 'Roboto',
-                }}
-              />
-              <TextWidget
-                text={`React Native Android Widget Release 0.${i + 1}`}
-                style={{
-                  fontSize: 12,
-                  color: '#ffffff',
-                  fontFamily: 'Roboto',
-                }}
-              />
-              <TextWidget
-                text="See what's new"
-                style={{
-                  fontSize: 12,
-                  color: '#ffffff',
-                  fontFamily: 'Roboto',
-                }}
-              />
-            </FlexWidget>
-            <IconWidget
-              icon={archivedIndex === i ? 'unarchive' : 'archive'}
-              size={24}
-              font={archivedIndex === i ? 'material' : 'material_outlined'}
-              style={{ color: '#fff' }}
-              clickAction="ARCHIVE"
-              clickActionData={{ listItemId: i }}
-            />
+              justifyContent: 'flex-start',
+              padding: 8,
+              borderWidth: 1,
+              borderColor: '#FFF',
+              flexGap: 5
+            }}>
+              <TextWidget text={`${lesson.period}`}/>
+              <FlexWidget style={{ borderWidth: 1, height: 'match_parent', borderColor: '#0F0' }}/>
+              <TextWidget text={`${lesson.name}`}/>
           </FlexWidget>
-        </FlexWidget>
-      ))}
-
-      <FlexWidget
-        style={{
-          width: 'match_parent',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'row',
-          paddingTop: 16,
-          paddingBottom: 24,
-        }}
-        clickAction="OPEN_URI"
-        clickActionData={{
-          uri: 'androidwidgetexample://list/list-demo',
-        }}
-      >
-        <TextWidget text="View more" style={{ fontSize: 14, color: '#fff' }} />
-      </FlexWidget>
-    </ListWidget>
+        ))}
+      </ListWidget>
   );
 }
 
-interface ListDemoWidgetProps {
-  archivedIndex?: number;
-}
-*/
+// interface CounterWidgetProps {
+//   count: number;
+// }
+
+// export function ScheduleWidget({ count = 0 }: CounterWidgetProps) {
+//   return (
+//     <FlexWidget
+//       style={{
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         backgroundColor: '#FF0',
+//         height: 'match_parent',
+//         width: 'match_parent',
+//         borderRadius: 32,
+//         flex: 1,
+//         flexDirection: 'column',
+//         flexGap: 5,
+//       }}
+//     >
+//       <FlexWidget
+//         style={{
+//           height: 'wrap_content',
+//           width: 48,
+//           alignItems: 'center',
+//           justifyContent: 'center',
+//           borderWidth: 3,
+//           borderColor: '#FF0000'
+//         }}
+//         clickAction="INCREMENT"
+//         clickActionData={{ value: count }}
+//       >
+//         <TextWidget style={{ fontSize: 48 }} text="+" />
+//       </FlexWidget>
+//       <FlexWidget style={{ flex: 1, flexDirection: 'row', flexGap: 5 }}>
+//         <TextWidget style={{ fontSize: 48, borderWidth: 3, borderColor: '#FF0000' }} text={`${count}`} />
+//         <FlexWidget style={{ width: 10, height: 10, backgroundColor: '#0F0' }}></FlexWidget>
+//       </FlexWidget>
+//       <FlexWidget
+//         style={{
+//           height: 'wrap_content',
+//           width: 48,
+//           alignItems: 'center',
+//           justifyContent: 'center',
+//           borderWidth: 3,
+//           borderColor: '#FF0000'
+//         }}
+//         clickAction="DECREMENT"
+//         clickActionData={{ value: count }}
+//       >
+//         <TextWidget style={{ fontSize: 48 }} text="-" />
+//       </FlexWidget>
+//     </FlexWidget>
+//   );
+// }

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
@@ -32,14 +32,14 @@ interface LessonPageProps {
 export default function LessonPage({ route, navigation }: LessonPageProps) {
   const { lesson } = route.params;
 
-  const [period, setPeriod] = React.useState<string>(lesson ? lesson.period.toString() : '');
-  const [day, setDay] = React.useState<string>(lesson ? lesson.day.toString() : '');
-  const [week, setWeek] = React.useState<string>(lesson ? lesson.week.toString() : '');
-  const [name, setName] = React.useState<string>(lesson ? lesson.name : '');
-  const [timeBegin, setTimeBegin] = React.useState<string>(lesson ? lesson.time[0] : '');
-  const [timeEnd, setTimeEnd] = React.useState<string>(lesson ? lesson.time[1] : '');
-  const [auditorium, setAuditorium] = React.useState<string>(lesson ? lesson.auditorium : '');
-  const [teacher, setTeacher] = React.useState<string>(lesson ? lesson.teacher : '');
+  const [period, setPeriod] = useState<string>(lesson ? lesson.period.toString() : '');
+  const [day, setDay] = useState<string>(lesson ? lesson.day.toString() : '');
+  const [week, setWeek] = useState<string>(lesson ? lesson.week.toString() : '');
+  const [name, setName] = useState<string>(lesson ? lesson.name : '');
+  const [timeBegin, setTimeBegin] = useState<string>(lesson ? lesson.time[0] : '');
+  const [timeEnd, setTimeEnd] = useState<string>(lesson ? lesson.time[1] : '');
+  const [auditorium, setAuditorium] = useState<string>(lesson ? lesson.auditorium : '');
+  const [teacher, setTeacher] = useState<string>(lesson ? lesson.teacher : '');
   
   const save = async () => {
     try {
@@ -70,11 +70,11 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
     navigation.goBack();
   }
   const hidden = () => {
-    // alert('You pressed a button. Hi ');
+    // alert('You pressed a button hidden');
     navigation.goBack();
   }
   const edit = () => {
-    // alert('You pressed a button. Hi ');    
+    // alert('You pressed a button edit');    
     navigation.goBack();
   }
 

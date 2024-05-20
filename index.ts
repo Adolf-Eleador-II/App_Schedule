@@ -7,6 +7,5 @@ import { WidgetConfigurationScreen } from './src/widget/WidgetConfigurationScree
 import 'expo-dev-client';
 
 registerRootComponent(App);
-// AppRegistry.registerComponent('App_Schedule', () => App);
 registerWidgetTaskHandler(WidgetTaskHandler);
 registerWidgetConfigurationScreen(WidgetConfigurationScreen);

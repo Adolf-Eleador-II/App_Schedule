@@ -23,9 +23,9 @@ const colorComponent={
   borderBG: ' border-gray-600',
 };
 
-type DayOfWeekName = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+type DayOfWeekNameType = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
 
-export interface Lesson {
+interface Lesson {
   // id: number;
   period: number;
   day: number;
@@ -35,13 +35,14 @@ export interface Lesson {
   auditorium: string;
   teacher: string;
 }
-export interface Lessons {
-  name: DayOfWeekName;
+
+interface Lessons {
+  name: DayOfWeekNameType;
   lessons: Lesson[];
 }
 
 interface ScheduleForDayProps {
-  dayOfWeekName: DayOfWeekName;
+  dayOfWeekName: DayOfWeekNameType;
   dayLessonList: Lesson[];
   navigation: any;
 }
@@ -59,7 +60,6 @@ export default function SchedulePage({ navigation }:any) {
     try {
       let _;
       const data = (_ = await AsyncStorage.getItem('lessons')) ? JSON.parse(_) : [];
-      // alert(data);
       setLessons(repackData(data))
     } catch (e) {
       alert('error\n'+e)
@@ -67,7 +67,6 @@ export default function SchedulePage({ navigation }:any) {
   }
 
   const loadDefault = () => {
-    // alert(JSON.stringify(lessonsDefault))
     setLessons(repackData(lessonsDefault));
   }
 
@@ -103,8 +102,8 @@ function ScheduleForDay({dayOfWeekName, dayLessonList, navigation}:ScheduleForDa
   return (
     <StyledView className='flex space-y-1'>
       <StyledText className={'text-2xl'+colorText.textLight}>{dayOfWeekName}:</StyledText>
-      {dayLessonList.map(lesson =>
-        <StyledView><Card key={lesson.period} lesson={lesson} action={() => {navigation.navigate('Lesson',{lesson: lesson})}}/></StyledView>
+      {dayLessonList.map((lesson: Lesson, i: number) =>
+        <StyledView key={i}><Card key={lesson.period} lesson={lesson} action={() => {navigation.navigate('Lesson',{lesson: lesson})}}/></StyledView>
       )}
     </StyledView>
   );

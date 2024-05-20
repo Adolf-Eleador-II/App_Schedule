@@ -5,19 +5,22 @@ const widgetConfig: WithAndroidWidgetsParams = {
   widgets: [
     {
       name: 'Schedule',
-      minWidth: '320dp',
+      minWidth: '120dp',
       minHeight: '120dp',
+      //width: 2=117
+      //height: 2=197
+      targetCellWidth: 2,
+      targetCellHeight: 2,
 
-      description: 'This is widget',
+      description: 'Widget',
       previewImage: './assets/widget-preview/hello.png',
 
-      updatePeriodMillis: 1000,
-      widgetFeatures: 'reconfigurable',
+      updatePeriodMillis: 3600000,
+      widgetFeatures: 'reconfigurable|configuration_optional',
+      resizeMode: 'horizontal|vertical'
     },
   ],
 };
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -53,3 +56,4 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   owner: "user135792468",
   plugins: [['react-native-android-widget', widgetConfig]],
 });
+

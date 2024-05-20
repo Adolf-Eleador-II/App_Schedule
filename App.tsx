@@ -28,11 +28,10 @@ const App = () => {
         <Stack.Screen name='Lesson' component={LessonPage} options={{ headerShown: false, statusBarHidden: true, navigationBarHidden: true, autoHideHomeIndicator: true}}/>
       </Stack.Navigator>
     </NavigationContainer>
-
-    // <WidgetPreviewScreen/>
   );
 }
 
 export default withExpoSnack(App);
 // npx expo prebuild && npx expo start --dev-client
 // eas build --profile development --platform android
+// npx expo run:android 

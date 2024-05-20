@@ -1,17 +1,16 @@
-/* eslint-disable react-native/no-inline-styles */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 import type { WidgetConfigurationScreenProps } from 'react-native-android-widget';
-import { ConfigurableWidget } from './ConfigurableWidget';
+import { ScheduleWidget } from './ScheduleWidget';
 
 const CONFIGURABLE_WIDGET_STORAGE_KEY = 'ConfigurableWidget:config';
 
 export function WidgetConfigurationScreen({ widgetInfo, setResult, renderWidget, }: WidgetConfigurationScreenProps) {
-  const [value, setValue] = React.useState(1);
-  const [incrementBy, setIncrementBy] = React.useState(1);
+  const [value, setValue] = useState(1);
+  const [incrementBy, setIncrementBy] = useState(1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     async function init() {
       const configStr = await AsyncStorage.getItem( CONFIGURABLE_WIDGET_STORAGE_KEY );
 
@@ -33,7 +32,7 @@ export function WidgetConfigurationScreen({ widgetInfo, setResult, renderWidget,
       config[widgetInfo.widgetId].value = value;
       config[widgetInfo.widgetId].incrementBy = incrementBy;
 
-      renderWidget(<ConfigurableWidget value={value} />);
+      // renderWidget(<ScheduleWidget count={value} />);
 
       await AsyncStorage.setItem( CONFIGURABLE_WIDGET_STORAGE_KEY, JSON.stringify(config) );
 
