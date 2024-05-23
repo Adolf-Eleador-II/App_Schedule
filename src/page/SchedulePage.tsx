@@ -109,7 +109,10 @@ function ScheduleForDay({dayOfWeekName, dayLessonList, navigation}:ScheduleForDa
   );
 }
 
-const getLessonForWeekDay = (lessons: Lesson[], weekDayNum: number) => lessons.map((x,i) => ({ id: i,...x })).filter(x => x.day === weekDayNum);
+const getLessonForWeekDay = (lessons: Lesson[], weekDayNum: number) =>
+  lessons.map((x,i) => ({ id: i,...x }))
+  .filter(x => x.day === weekDayNum)
+  .sort( function (a,b) { return a.time[0] < b.time[0] ? 1 : -1; });
 
 const lessonsDefault = [
   {

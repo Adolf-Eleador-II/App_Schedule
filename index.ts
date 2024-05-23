@@ -8,4 +8,4 @@ import 'expo-dev-client';
 
 registerRootComponent(App);
 registerWidgetTaskHandler(WidgetTaskHandler);
-registerWidgetConfigurationScreen(WidgetConfigurationScreen);
+// registerWidgetConfigurationScreen(WidgetConfigurationScreen);

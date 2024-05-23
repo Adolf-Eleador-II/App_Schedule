@@ -16,7 +16,7 @@ const widgetConfig: WithAndroidWidgetsParams = {
       previewImage: './assets/widget-preview/hello.png',
 
       updatePeriodMillis: 3600000,
-      widgetFeatures: 'reconfigurable|configuration_optional',
+      // widgetFeatures: 'reconfigurable|configuration_optional',
       resizeMode: 'horizontal|vertical'
     },
   ],

@@ -20,14 +20,14 @@ interface ScheduleWidgetProps {
 export function ScheduleWidget({ lessons = [], dayName }: ScheduleWidgetProps) {
   return (
       <ListWidget
-        style={{ backgroundColor: '#666', height: 'match_parent', width: 'match_parent' }}
+        style={{ backgroundColor: '#374151', height: 'match_parent', width: 'match_parent' }}
       >
       <TextWidget text={`${dayName}`}
         style={{
           width: 'match_parent',
           textAlign: 'center',
-          backgroundColor: '#aaa',
-          color: '#666'
+          backgroundColor: '#374151',
+          color: '#e5e7eb'
         }}/>
         {lessons.map((lesson: Lesson, i: number) => (
           <FlexWidget key={i}
@@ -36,14 +36,14 @@ export function ScheduleWidget({ lessons = [], dayName }: ScheduleWidgetProps) {
               alignItems: 'center',
               flexDirection: 'row',
               justifyContent: 'flex-start',
-              padding: 8,
+              padding: 4,
               borderWidth: 1,
-              borderColor: '#FFF',
+              borderColor: '#e5e7eb',
               flexGap: 5
             }}>
-              <TextWidget text={`${lesson.period}`}/>
-              <FlexWidget style={{ borderWidth: 1, height: 'match_parent', borderColor: '#0F0' }}/>
-              <TextWidget text={`${lesson.name}`}/>
+              <TextWidget text={`${lesson.period}`} style={{ padding: 4, backgroundColor: '#4b5563', color:'#e5e7eb'}} />
+              <FlexWidget style={{ borderWidth: 1, height: 'match_parent', borderColor: '#e5e7eb' }}/>
+              <TextWidget text={`${lesson.name}`} style={{ padding: 4, backgroundColor: '#4b5563', color:'#e5e7eb'}}/>
           </FlexWidget>
         ))}
       </ListWidget>
