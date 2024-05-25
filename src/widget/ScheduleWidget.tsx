@@ -1,16 +1,6 @@
 import React from 'react';
 import { FlexWidget, IconWidget, ListWidget, TextWidget } from 'react-native-android-widget';
-
-interface Lesson {
-  // id: number;
-  period: number;
-  day: number;
-  week: number;
-  time: [ string, string ];
-  name: string;
-  auditorium: string;
-  teacher: string;
-}
+import type { Lesson } from '../Lesson'
 
 interface ScheduleWidgetProps {
   dayName: string,
