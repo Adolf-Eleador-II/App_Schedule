@@ -35,14 +35,11 @@ export async function WidgetTaskHandler(props: WidgetTaskHandlerProps) {
     case 'WIDGET_RESIZED':
     case 'WIDGET_ADDED':
     case 'WIDGET_UPDATE':
+    case 'WIDGET_CLICK':
         props.renderWidget(<ScheduleWidget lessons={ dayLessons } dayName={ DayOfWeekName[today] }/>);
       break;
       
-
     case 'WIDGET_DELETED':
-    case 'WIDGET_CLICK':
-      break;
-
     default:
       break;
   }
