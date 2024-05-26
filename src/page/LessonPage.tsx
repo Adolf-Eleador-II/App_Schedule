@@ -4,26 +4,13 @@ import { View, Text, ScrollView } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as LessonClass from '../Lesson'
 
-import Input from '../components/Input';
-import Button from '../components/Button';
+import { Button } from '../components/Button';
+import { Input } from '../components/Input';
+import { AntDesign, Feather } from '@expo/vector-icons';
 
 import { styled } from 'nativewind';
 const StyledView = styled(View)
 const StyledText = styled(Text)
-
-const colorText = {
-  textLight: ' text-white',
-  textDark: ' text-black',
-};
-const colorComponent = {
-  componentDark: ' bg-gray-700',
-  componentLight: ' bg-gray-200',
-  borderLight: ' border-gray-200',
-  componentBG: ' bg-gray-600',
-  borderBG: ' border-gray-600',
-};
-
-const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 interface LessonPageProps {
   route: any;
@@ -61,41 +48,44 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
     navigation.goBack();
   }
   const deleteLesson = async () => {
-    await localLessonClass.delete(thisLesson);
+    await localLessonClass.remove(thisLesson);
     navigation.goBack();
   }
 
   return (
-    <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8' + colorComponent.componentDark + colorComponent.borderBG}>
+    <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
       <StyledView className='flex flex-row space-x-2'>
-        <Button label="<-" action={() => { navigation.goBack() }}></Button>
-        <StyledText className={'text-3xl' + colorText.textLight}>Занятие:</StyledText>
+        <Button action={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={19} color="white" /></Button>
+        <StyledText className={'text-3xl text-white'}>Занятие:</StyledText>
       </StyledView>
 
-      <ScrollView><StyledView className={'flex-1 space-y-3' + colorComponent.componentDark}>
+      <ScrollView><StyledView className={'flex-1 space-y-3 bg-gray-700'}>
         <StyledView className='flex space-y-1'>
-          <StyledView><Input label={'Пара'} value={period} action={setPeriod}></Input></StyledView>
-          <StyledView><Input label={'День'} value={day} action={setDay}></Input></StyledView>
-          <StyledView><Input label={'Название предмета'} value={name} action={setName}></Input></StyledView>
-          <StyledView><Input label={'Кабинет'} value={auditorium} action={setAuditorium} ></Input></StyledView>
-          <StyledView><Input label={'Имя преподвавтеля'} value={teacher} action={setTeacher} ></Input></StyledView>
+          <StyledView><Input label={'Пара'} value={period} action={setPeriod}/></StyledView>
+          <StyledView><Input label={'День'} value={day} action={setDay}/></StyledView>
+          <StyledView><Input label={'Название предмета'} value={name} action={setName}/></StyledView>
+          <StyledView><Input label={'Кабинет'} value={auditorium} action={setAuditorium} /></StyledView>
+          <StyledView><Input label={'Имя преподвавтеля'} value={teacher} action={setTeacher} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><Input label={'Неделя'} value={week} action={setWeek}></Input></StyledView>
-          <StyledView><Input label={'Начало'} value={timeBegin} action={setTimeBegin} ></Input></StyledView>
-          <StyledView><Input label={'Конец'} value={timeEnd} action={setTimeEnd} ></Input></StyledView>
-          {/* <StyledView><Input label={'Уведомлять за'} value={Period} action={setPeriod} ></Input></StyledView> */}
+          <StyledView><Input label={'Неделя'} value={week} action={setWeek}/></StyledView>
+          <StyledView><Input label={'Начало'} value={timeBegin} action={setTimeBegin} /></StyledView>
+          <StyledView><Input label={'Конец'} value={timeEnd} action={setTimeEnd} /></StyledView>
+          {/* <StyledView><Input label={'Уведомлять за'} value={Period} action={setPeriod} /></StyledView> */}
         </StyledView>
         {/* <StyledView className='flex space-y-1'> */}
-        {/* <StyledView><Input label={'Цвет'} value={Period} action={setPeriod} ></Input></StyledView> */}
-        {/* <StyledView><Input label={'Заметка'} value={Period} action={setPeriod} ></Input></StyledView> */}
+        {/* <StyledView><Input label={'Цвет'} value={Period} action={setPeriod} /></StyledView> */}
+        {/* <StyledView><Input label={'Заметка'} value={Period} action={setPeriod} /></StyledView> */}
         {/* </StyledView> */}
       </StyledView></ScrollView>
 
       <StyledView className='flex flex-row justify-between space-x-2'>
-        <Button label="Сохранить" action={saveLesson}></Button>
-        <Button label="Скрыть" action={hiddenLesson}></Button>
-        <Button label="Удалить" action={deleteLesson}></Button>
+        {/* <ButtonText label="Сохранить" action={saveLesson}></ButtonText>
+        <ButtonText label="Скрыть" action={hiddenLesson}></ButtonText>
+        <ButtonText label="Удалить" action={deleteLesson}></ButtonText> */}
+        <Button action={saveLesson}><Feather name='save' size={19} color="white" /></Button>
+        <Button action={hiddenLesson}><Feather name='eye-off' size={19} color="white" /></Button>
+        <Button action={deleteLesson}><AntDesign name='delete' size={19} color="white" /></Button>
       </StyledView>
     </StyledView>
   );

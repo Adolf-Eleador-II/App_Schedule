@@ -1,6 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { requestWidgetUpdate } from "react-native-android-widget";
+import { ScheduleWidget } from "./widget/ScheduleWidget";
 
-const DayOfWeekName = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as const;
+export const DayOfWeekName = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'] as const;
 export type DayOfWeekNameType = typeof DayOfWeekName[number];;
 
 export interface LessonsDay {
@@ -42,7 +44,7 @@ export class LessonList {
     this.save();
   }
 
-  async delete(oldLesson: Lesson){
+  async remove(oldLesson: Lesson){
     await this.load();
     const i = this.lessons.findIndex((x: Lesson) => {
       return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
@@ -82,12 +84,13 @@ export class LessonList {
   async save() {
     try {
       await AsyncStorage.setItem('lessons', JSON.stringify(this.lessons));
+      widgetUpdate();
     } catch (e) {
       console.log('error\n' + e)
     }
   }
 
-  async deleteAll() {
+  async removeAll() {
     try {
       await AsyncStorage.removeItem('lessons');
     } catch (e) {
@@ -101,10 +104,23 @@ export class LessonList {
   }
 }
 
+async function widgetUpdate(){
+  const today = new Date().getDay();
+  
+  const localLessonClass = new LessonList();
+  await localLessonClass.load();
+  const dayLessons = localLessonClass.getDayLessons(DayOfWeekName[today]);
+  requestWidgetUpdate({
+    widgetName: 'Schedule',
+    renderWidget: () => <ScheduleWidget lessons={ dayLessons } dayName={ DayOfWeekName[today] }/>,
+    widgetNotFound: () => {}
+  })
+}
+
 const lessonsDefault = [
   {
     period: 2,
-    day: 0,
+    day: 1,
     week: 0,
     time: ['10:00', '11:20'],
     name: 'Системы управления базами данных (лаб)',
@@ -113,7 +129,7 @@ const lessonsDefault = [
   },
   {
     period: 3,
-    day: 0,
+    day: 1,
     week: 0,
     time: ['11:30', '12:50'],
     name: 'Системы управления базами данных (лаб)',
@@ -122,7 +138,7 @@ const lessonsDefault = [
   },
   {
     period: 1,
-    day: 1,
+    day: 2,
     week: 0,
     time: ['8:30', '9:50'],
     name: 'Системы управления базами данных (лек)',
@@ -131,7 +147,7 @@ const lessonsDefault = [
   },
   {
     period: 2,
-    day: 1,
+    day: 2,
     week: 0,
     time: ['10:00', '11:20'],
     name: 'Системы управления базами данных (лек)',
@@ -140,7 +156,7 @@ const lessonsDefault = [
   },
   {
     period: 4,
-    day: 2,
+    day: 3,
     week: 0,
     time: ['13:20', '14:40'],
     name: 'Технологии мультимедиа (лек)',
@@ -149,7 +165,7 @@ const lessonsDefault = [
   },
   {
     period: 5,
-    day: 2,
+    day: 3,
     week: 0,
     time: ['14:50', '16:10'],
     name: 'Технологии мультимедиа (лек)',
@@ -158,7 +174,7 @@ const lessonsDefault = [
   },
   {
     period: 2,
-    day: 3,
+    day: 4,
     week: 0,
     time: ['10:00', '11:20'],
     name: 'ФДТ: Основы подготовки технической документации (пр)',
@@ -167,7 +183,7 @@ const lessonsDefault = [
   },
   {
     period: 3,
-    day: 3,
+    day: 4,
     week: 0,
     time: ['11:30', '12:50'],
     name: 'Система управления мехатронными комплексами (лаб)',
@@ -176,7 +192,7 @@ const lessonsDefault = [
   },
   {
     period: 4,
-    day: 3,
+    day: 4,
     week: 0,
     time: ['13:20', '14:40'],
     name: 'Технологии мультимедиа (лаб)',
@@ -185,7 +201,7 @@ const lessonsDefault = [
   },
   {
     period: 2,
-    day: 4,
+    day: 5,
     week: 0,
     time: ['10:00', '11:20'],
     name: 'Математические методы искусственного интелекта (лек)',
@@ -194,7 +210,7 @@ const lessonsDefault = [
   },
   {
     period: 3,
-    day: 4,
+    day: 5,
     week: 0,
     time: ['11:30', '12:50'],
     name: 'Математические методы искусственного интелекта (лек)',
@@ -203,7 +219,7 @@ const lessonsDefault = [
   },
   {
     period: 2,
-    day: 5,
+    day: 6,
     week: 0,
     time: ['10:00', '11:20'],
     name: 'Математические методы искусственного интелекта (лаб)',
@@ -212,7 +228,7 @@ const lessonsDefault = [
   },
   {
     period: 3,
-    day: 5,
+    day: 6,
     week: 0,
     time: ['11:30', '12:50'],
     name: 'Математические методы искусственного интелекта (лаб)',

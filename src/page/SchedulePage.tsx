@@ -6,23 +6,12 @@ import { StyleSheet, View, Text, SafeAreaView, ScrollView } from 'react-native';
 import * as LessonClass from '../Lesson'
 
 import Card from '../components/Card';
-import Button from '../components/Button';
+import { Button, ButtonText } from '../components/Button';
 
 import { StyledComponent, styled } from 'nativewind';
+import { AntDesign, Feather } from '@expo/vector-icons';
 const StyledView = styled(View)
 const StyledText = styled(Text)
-
-const colorText = {
-  textLight: ' text-white',
-  textDark: ' text-black',
-};
-const colorComponent = {
-  componentDark: ' bg-gray-700',
-  componentLight: ' bg-gray-200',
-  borderLight: ' border-gray-200',
-  componentBG: ' bg-gray-600',
-  borderBG: ' border-gray-600',
-};
 
 export default function SchedulePage({ navigation }: any) {
   const localLessonClass = new LessonClass.LessonList();
@@ -39,15 +28,15 @@ export default function SchedulePage({ navigation }: any) {
   }
 
   const otherButton = () => {
-    // AsyncStorage.clear();
+    navigation.navigate('Setting');
   }
 
   useFocusEffect(useCallback(() => { load() }, []));
   return (
-    <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8' + colorComponent.componentDark + colorComponent.borderBG}>
+    <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
       <StyledView className='flex flex-row justify-between space-x-2'>
-        <StyledText className={'text-3xl' + colorText.textLight}>Расписание:</StyledText>
-        <Button label="+" action={() => { navigation.navigate('Lesson', {}) }}></Button>
+        <StyledText className={'text-3xl text-white'}>Расписание:</StyledText>
+        <Button action={() => { navigation.navigate('Lesson', {}) }}><Feather name='plus' size={19} color="white" /></Button>
       </StyledView>
 
       <ScrollView>
@@ -55,9 +44,9 @@ export default function SchedulePage({ navigation }: any) {
       </ScrollView>
 
       <StyledView className='flex flex-row items-stretch justify-between space-x-2'>
-        <Button label="Загрузить" action={load}></Button>
-        <Button label="Загрузить заготовку" action={loadDefault}></Button>
-        <Button label="*_*" action={otherButton}></Button>
+        <ButtonText name={"Загрузить"} action={load} />
+        <ButtonText name={"Загрузить заготовку"} action={loadDefault} />
+        <Button action={otherButton}><AntDesign name='setting' size={19} color="white" /></Button>
       </StyledView>
 
     </StyledView>
@@ -74,7 +63,7 @@ function ScheduleForDay({ dayOfWeekName, dayLessonList, navigation }: ScheduleFo
   if (dayLessonList.length !== 0)
     return (
       <StyledView className='flex space-y-1'>
-        <StyledText className={'text-2xl' + colorText.textLight}>{dayOfWeekName}:</StyledText>
+        <StyledText className={'text-2xl text-white'}>{dayOfWeekName}:</StyledText>
         {dayLessonList.map((lesson: LessonClass.Lesson, i: number) =>
           <StyledView key={i}><Card key={lesson.period} lesson={lesson} action={() => { navigation.navigate('Lesson', { thisLesson: lesson }) }} /></StyledView>
         )}

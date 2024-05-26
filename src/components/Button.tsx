@@ -1,35 +1,38 @@
-import React from 'react';
-import { View, Pressable, Text } from 'react-native';
+import React, { ReactNode } from 'react';
+import { View, Pressable, Text, TextInput } from 'react-native';
 
+// import { Select } from "native-base";
 import { styled } from 'nativewind';
 const StyledView = styled(View)
 const StyledText = styled(Text)
 
-const colorText={
-  textLight: ' text-white',
-  textDark: ' text-black',
-};
-const colorComponent={
-  componentDark: ' bg-gray-700',
-  componentLight: ' bg-gray-200',
-  borderLight: ' border-gray-200',
-  componentBG: ' bg-gray-600',
-  borderBG: ' border-gray-600',
-};
 
-interface ButtonProps {
-  label: string;
+interface ButtonTextProps {
+  name: string;
   action: () => void;
 }
 
-export default function Button ({label, action}: ButtonProps) {
-
+export function ButtonText({ name, action }: ButtonTextProps) {
   return (
-    // style={[styles.buttonContainer, { borderWidth: 4, borderColor: "#ffd33d", borderRadius: 18 }]}
-    <Pressable onPress={ action }>
-      <StyledView className={'p-1 border-2'+colorComponent.borderLight}>
-        <StyledText className={'text-1xl'+colorText.textLight}>{label}</StyledText>
+    <Pressable onPress={action}>
+      <StyledView className={'p-1 border-2 border-gray-200'}>
+        <StyledText className={'text-1xl text-center text-white'}>{name}</StyledText>
       </StyledView>
     </Pressable>
-  );
+  )
+}
+
+interface ButtonProps {
+  children?: ReactNode;
+  action: () => void;
+}
+
+export function Button({ children, action }: ButtonProps) {
+  return (
+    <Pressable onPress={action}>
+      <StyledView className={'p-1 border-2 border-gray-200 '}>
+        {children}
+      </StyledView>
+    </Pressable>
+  )
 }
