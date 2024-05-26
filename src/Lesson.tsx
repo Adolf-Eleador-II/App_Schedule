@@ -20,33 +20,35 @@ export interface Lesson {
 
 export class LessonList {
   private lessons: Lesson[];
-
-  // printJSON() {
-  //   console.log("Lesson debag:\n" + JSON.stringify(this.lessons, null, 2));
-  // }
+  // console.log("Lesson debag:\n" + JSON.stringify(this.lessons, null, 2));
 
   async replace(oldLesson: Lesson, newLesson: Lesson) {
     await this.load();
     if (oldLesson) {
-
-      console.log('find:\n%d - %d - %d - %s\n%d - %d - %d - %s\nin', oldLesson.day, oldLesson.week, oldLesson.period, oldLesson.name, newLesson.day, newLesson.week, newLesson.period, newLesson.name);
-      this.lessons.map((x) => { console.log('%d - %d - %d - %s', x.day, x.week, x.period, x.name) })
-
-
       const i = this.lessons.findIndex((x: Lesson) => {
-        return ((x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period) || (x.day == newLesson.day && x.week == newLesson.week && x.period == newLesson.period))
+        return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
       });
+      if (i != -1) this.lessons.splice(i, 1);
 
-      console.log('\nday: %d = %d\nweek: %d = %d\nperiod: %d = %d\n',
-        this.lessons[i].day, newLesson.day,
-        this.lessons[i].week, newLesson.week,
-        this.lessons[i].period, newLesson.period);
-      this.lessons[i] = newLesson;
+      const j = this.lessons.findIndex((x: Lesson) => {
+        return (x.day == newLesson.day && x.week == newLesson.week && x.period == newLesson.period)
+      });
+      if (j != -1) this.lessons[j] = newLesson;
+      else this.lessons.push(newLesson);
     }
     else {
       this.lessons.push(newLesson);
     }
-    await this.save();
+    this.save();
+  }
+
+  async delete(oldLesson: Lesson){
+    await this.load();
+    const i = this.lessons.findIndex((x: Lesson) => {
+      return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
+    });
+    if (i != -1) this.lessons.splice(i, 1);
+    this.save();
   }
 
   getDayLessons(day: DayOfWeekNameType): Lesson[] {

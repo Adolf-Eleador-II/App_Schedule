@@ -1,7 +1,7 @@
 import { View, Pressable, Text } from 'react-native';
 
 import { styled } from 'nativewind';
-import { Lesson } from '../page/SchedulePage';
+import type { Lesson } from '../Lesson'
 const StyledView = styled(View)
 const StyledText = styled(Text)
 

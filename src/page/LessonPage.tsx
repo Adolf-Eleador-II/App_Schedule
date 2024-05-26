@@ -31,6 +31,7 @@ interface LessonPageProps {
 }
 
 export default function LessonPage({ route, navigation }: LessonPageProps) {
+  const localLessonClass = new LessonClass.LessonList();
   const { thisLesson } = route.params;
 
   const [period, setPeriod] = useState<string>(thisLesson ? thisLesson.period.toString() : '');
@@ -42,7 +43,7 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
   const [auditorium, setAuditorium] = useState<string>(thisLesson ? thisLesson.auditorium : '');
   const [teacher, setTeacher] = useState<string>(thisLesson ? thisLesson.teacher : '');
 
-  const save = async () => {
+  const saveLesson = async () => {
     const lesson = {
           period: Number(period),
           day: Number(day),
@@ -53,14 +54,14 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
           time: [timeBegin, timeEnd],
     } as LessonClass.Lesson;
 
-    const localLessonClass = new LessonClass.LessonList();
     await localLessonClass.replace(thisLesson, lesson);
     navigation.goBack();
   }
-  const hidden = () => {
+  const hiddenLesson = () => {
     navigation.goBack();
   }
-  const edit = () => {
+  const deleteLesson = async () => {
+    await localLessonClass.delete(thisLesson);
     navigation.goBack();
   }
 
@@ -92,9 +93,9 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
       </StyledView></ScrollView>
 
       <StyledView className='flex flex-row justify-between space-x-2'>
-        <Button label="Сохранить" action={save}></Button>
-        <Button label="Скрыть" action={hidden}></Button>
-        <Button label="Изменить" action={edit}></Button>
+        <Button label="Сохранить" action={saveLesson}></Button>
+        <Button label="Скрыть" action={hiddenLesson}></Button>
+        <Button label="Удалить" action={deleteLesson}></Button>
       </StyledView>
     </StyledView>
   );
