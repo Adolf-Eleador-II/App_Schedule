@@ -6,6 +6,7 @@ import * as LessonClass from '../Lesson'
 
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
+import { Select } from '../components/Select';
 import { AntDesign, Feather } from '@expo/vector-icons';
 
 import { styled } from 'nativewind';
@@ -22,8 +23,11 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
   const { thisLesson } = route.params;
 
   const [period, setPeriod] = useState<string>(thisLesson ? thisLesson.period.toString() : '');
-  const [day, setDay] = useState<string>(thisLesson ? thisLesson.day.toString() : '');
-  const [week, setWeek] = useState<string>(thisLesson ? thisLesson.week.toString() : '');
+  const dayList = LessonClass.DayOfWeekName.map((x: string) => x);
+  const [day, setDay] = useState<number>(thisLesson ? thisLesson.day : 0);
+  const weekList = ['Неделя-1','Неделя-2'].map((x: string) => x);
+  // const weekList = ['Неделя-1','Неделя-2','Неделя-4','Неделя-5','Неделя-6','Неделя-7'].map((x: string) => x);
+  const [week, setWeek] = useState<number>(thisLesson ? thisLesson.week : 0);
   const [name, setName] = useState<string>(thisLesson ? thisLesson.name : '');
   const [timeBegin, setTimeBegin] = useState<string>(thisLesson ? thisLesson.time[0] : '');
   const [timeEnd, setTimeEnd] = useState<string>(thisLesson ? thisLesson.time[1] : '');
@@ -55,20 +59,36 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
   return (
     <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
       <StyledView className='flex flex-row space-x-2'>
-        <Button action={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={19} color="white" /></Button>
+        <Button action={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={19} color='white' /></Button>
         <StyledText className={'text-3xl text-white'}>Занятие:</StyledText>
       </StyledView>
 
       <ScrollView><StyledView className={'flex-1 space-y-3 bg-gray-700'}>
         <StyledView className='flex space-y-1'>
           <StyledView><Input label={'Пара'} value={period} action={setPeriod}/></StyledView>
-          <StyledView><Input label={'День'} value={day} action={setDay}/></StyledView>
+          <StyledView>
+            <Select
+              label='День'
+              options={dayList}
+              defaultIndex={ day }
+              action={setDay}
+              />
+          </StyledView>
+          {/* <StyledView><Input label={'День'} value={day} action={setDay}/></StyledView> */}
           <StyledView><Input label={'Название предмета'} value={name} action={setName}/></StyledView>
           <StyledView><Input label={'Кабинет'} value={auditorium} action={setAuditorium} /></StyledView>
           <StyledView><Input label={'Имя преподвавтеля'} value={teacher} action={setTeacher} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><Input label={'Неделя'} value={week} action={setWeek}/></StyledView>
+          <StyledView>
+            <Select
+              label='Неделя'
+              options={weekList}
+              defaultIndex={ week }
+              action={setWeek}
+              />
+          </StyledView>
+          {/* <StyledView><Input label={'Неделя'} value={week} action={setWeek}/></StyledView> */}
           <StyledView><Input label={'Начало'} value={timeBegin} action={setTimeBegin} /></StyledView>
           <StyledView><Input label={'Конец'} value={timeEnd} action={setTimeEnd} /></StyledView>
           {/* <StyledView><Input label={'Уведомлять за'} value={Period} action={setPeriod} /></StyledView> */}
@@ -80,12 +100,12 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
       </StyledView></ScrollView>
 
       <StyledView className='flex flex-row justify-between space-x-2'>
-        {/* <ButtonText label="Сохранить" action={saveLesson}></ButtonText>
-        <ButtonText label="Скрыть" action={hiddenLesson}></ButtonText>
-        <ButtonText label="Удалить" action={deleteLesson}></ButtonText> */}
-        <Button action={saveLesson}><Feather name='save' size={19} color="white" /></Button>
-        <Button action={hiddenLesson}><Feather name='eye-off' size={19} color="white" /></Button>
-        <Button action={deleteLesson}><AntDesign name='delete' size={19} color="white" /></Button>
+        {/* <ButtonText label='Сохранить' action={saveLesson}></ButtonText>
+        <ButtonText label='Скрыть' action={hiddenLesson}></ButtonText>
+        <ButtonText label='Удалить' action={deleteLesson}></ButtonText> */}
+        <Button action={saveLesson}><Feather name='save' size={19} color='white' /></Button>
+        <Button action={hiddenLesson}><Feather name='eye-off' size={19} color='white' /></Button>
+        <Button action={deleteLesson}><AntDesign name='delete' size={19} color='white' /></Button>
       </StyledView>
     </StyledView>
   );

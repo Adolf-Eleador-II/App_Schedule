@@ -7,8 +7,6 @@ const widgetConfig: WithAndroidWidgetsParams = {
       name: 'Schedule',
       minWidth: '120dp',
       minHeight: '120dp',
-      //width: 2=117
-      //height: 2=197
       targetCellWidth: 2,
       targetCellHeight: 2,
 
@@ -16,7 +14,6 @@ const widgetConfig: WithAndroidWidgetsParams = {
       previewImage: './assets/widget-preview/hello.png',
 
       updatePeriodMillis: 3600000,
-      // widgetFeatures: 'reconfigurable|configuration_optional',
       resizeMode: 'horizontal|vertical'
     },
   ],

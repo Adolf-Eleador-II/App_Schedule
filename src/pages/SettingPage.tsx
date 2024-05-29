@@ -20,7 +20,8 @@ const deleteLessons = async () => {
 }
 
 export default function SettingPage({ navigation }: any) {
-  const [text, setText] = useState<string>('');
+  const [text1, setText1] = useState<string>('Text1');
+  const [text2, setText2] = useState<number>(0);
 
   return (
     <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
@@ -31,15 +32,22 @@ export default function SettingPage({ navigation }: any) {
 
       <ScrollView><StyledView className={'flex-1 space-y-3 bg-gray-700'}>
         <StyledView className='flex space-y-1'>
-          <StyledView><ButtonText name={"Экспорт"} action={() => { return 0 }}/></StyledView>
-          <StyledView><ButtonText name={"Импорт"} action={() => { return 0 }}/></StyledView>
+          <StyledView><ButtonText name={"Экспорт"} action={() => { return 0 }} /></StyledView>
+          <StyledView><ButtonText name={"Импорт"} action={() => { return 0 }} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><ButtonText name={"Сброс расписания"} action={deleteLessons}/></StyledView>
+          <StyledView><ButtonText name={"Сброс расписания"} action={deleteLessons} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><Input label='День' value={text} action={setText}/></StyledView>
-          <StyledView><Select label='Title' options={''}/></StyledView>
+          <StyledView><Input label='День' value={text1} action={setText1} /></StyledView>
+          <StyledView>
+            <Select
+              label='Неделя'
+              options={LessonClass.DayOfWeekName.map((x: string) => x)}
+              action={setText2}
+              />
+          </StyledView>
+          <StyledView><StyledText className='text-1xl text-white'>{text2}</StyledText></StyledView>
         </StyledView>
       </StyledView></ScrollView>
 

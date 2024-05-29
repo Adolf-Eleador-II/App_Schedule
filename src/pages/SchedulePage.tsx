@@ -44,9 +44,9 @@ export default function SchedulePage({ navigation }: any) {
       </ScrollView>
 
       <StyledView className='flex flex-row items-stretch justify-between space-x-2'>
-        <ButtonText name={"Загрузить"} action={load} />
-        <ButtonText name={"Загрузить заготовку"} action={loadDefault} />
-        <Button action={otherButton}><AntDesign name='setting' size={19} color="white" /></Button>
+        <ButtonText name={"Загрузить"} action={load}/>
+        <ButtonText name={"Загрузить заготовку"} action={loadDefault}/>
+        <Button action={otherButton}><AntDesign name='setting' size={19} color="white"/></Button>
       </StyledView>
 
     </StyledView>

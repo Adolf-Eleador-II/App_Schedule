@@ -4,9 +4,9 @@ import { StyleSheet, View, Text, } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import SchedulePage from './src/page/SchedulePage';
-import LessonPage from './src/page/LessonPage';
-import SettingPage from './src/page/SettingPage';
+import SchedulePage from './src/pages/SchedulePage';
+import LessonPage from './src/pages/LessonPage';
+import SettingPage from './src/pages/SettingPage';
 
 import Notifications from './src/notification/Notifications';
 
@@ -34,4 +34,4 @@ const App = () => {
 
 export default withExpoSnack(App);
 // eas build --profile development --platform android
-// npx expo run:android 
+// npx expo run:android

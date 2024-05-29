@@ -12,7 +12,6 @@ interface CardProps {
 
 export default function Card({lesson, action}:CardProps) {
   return (
-    // style={[styles.buttonContainer, { borderWidth: 4, borderColor: '#ffd33d', borderRadius: 18 }]}
     <Pressable onPress={action}>
       <StyledView className={'flex h-max flex-row p-1 border-2 border-gray-200 bg-gray-700'}>
 
