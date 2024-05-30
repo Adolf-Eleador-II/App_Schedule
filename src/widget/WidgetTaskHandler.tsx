@@ -19,7 +19,7 @@ export async function WidgetTaskHandler(props: WidgetTaskHandlerProps) {
   
   const localLessonClass = new LessonClass.LessonList();
   await localLessonClass.load();
-  const dayLessons = localLessonClass.getDayLessons(LessonClass.DayOfWeekName[today]);
+  const dayLessons = localLessonClass.getDayLessons(LessonClass.DayOfWeekName[today], LessonClass.getIndexWeek());
 
   // console.log("Lesson debag:\n" + JSON.stringify(dayLessons, null, 2));
 

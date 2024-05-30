@@ -13,7 +13,7 @@ interface InputProps {
     action: (value: string) => void;
   }
   
-  export function Input({ label, value, action }: InputProps) {
+  export function InputParameter({ label, value, action }: InputProps) {
     return (
       <StyledView className='flex h-max flex-row p-1 border-2 border-gray-200 bg-gray-700'>
   

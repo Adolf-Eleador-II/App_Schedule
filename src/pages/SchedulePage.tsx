@@ -7,6 +7,7 @@ import * as LessonClass from '../Lesson'
 
 import Card from '../components/Card';
 import { Button, ButtonText } from '../components/Button';
+import { Select } from '../components/Select';
 
 import { StyledComponent, styled } from 'nativewind';
 import { AntDesign, Feather } from '@expo/vector-icons';
@@ -17,25 +18,29 @@ export default function SchedulePage({ navigation }: any) {
   const localLessonClass = new LessonClass.LessonList();
   const [lessons, setLessons] = useState<LessonClass.LessonsDay[]>([]);
 
+  const weekList = ['Неделя-1','Неделя-2'];
+  const [weekIndex, setWeekIndex] = useState<number>(LessonClass.getIndexWeek());
+
   const load = async () => {
     await localLessonClass.load();
-    setLessons(localLessonClass.getWeekLessons());
+    setLessons(localLessonClass.getWeekLessons(weekIndex));
   }
 
   const loadDefault = () => {
     localLessonClass.loadDefault();
-    setLessons(localLessonClass.getWeekLessons());
+    setLessons(localLessonClass.getWeekLessons(weekIndex));
   }
 
   const otherButton = () => {
     navigation.navigate('Setting');
   }
 
-  useFocusEffect(useCallback(() => { load() }, []));
+  useFocusEffect(useCallback(() => { load() }, [weekIndex]));
   return (
     <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
       <StyledView className='flex flex-row justify-between space-x-2'>
         <StyledText className={'text-3xl text-white'}>Расписание:</StyledText>
+        <StyledView><Select options={weekList} action={setWeekIndex} defaultIndex={weekIndex}/></StyledView>
         <Button action={() => { navigation.navigate('Lesson', {}) }}><Feather name='plus' size={19} color="white" /></Button>
       </StyledView>
 

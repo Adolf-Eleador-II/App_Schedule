@@ -6,8 +6,8 @@ import { View, Text, SafeAreaView, ScrollView } from 'react-native';
 import * as LessonClass from '../Lesson'
 
 import { Button, ButtonText } from '../components/Button';
-import { Input } from '../components/Input';
-import { Select } from '../components/Select';
+import { InputParameter } from '../components/Input';
+import { SelectParameter } from '../components/Select';
 
 import { StyledComponent, styled } from 'nativewind';
 import { AntDesign } from '@expo/vector-icons';
@@ -39,9 +39,9 @@ export default function SettingPage({ navigation }: any) {
           <StyledView><ButtonText name={"Сброс расписания"} action={deleteLessons} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><Input label='День' value={text1} action={setText1} /></StyledView>
+          <StyledView><InputParameter label='День' value={text1} action={setText1} /></StyledView>
           <StyledView>
-            <Select
+            <SelectParameter
               label='Неделя'
               options={LessonClass.DayOfWeekName.map((x: string) => x)}
               action={setText2}

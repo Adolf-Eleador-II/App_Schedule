@@ -5,8 +5,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as LessonClass from '../Lesson'
 
 import { Button } from '../components/Button';
-import { Input } from '../components/Input';
-import { Select } from '../components/Select';
+import { InputParameter } from '../components/Input';
+import { SelectParameter } from '../components/Select';
 import { AntDesign, Feather } from '@expo/vector-icons';
 
 import { styled } from 'nativewind';
@@ -25,8 +25,7 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
   const [period, setPeriod] = useState<string>(thisLesson ? thisLesson.period.toString() : '');
   const dayList = LessonClass.DayOfWeekName.map((x: string) => x);
   const [day, setDay] = useState<number>(thisLesson ? thisLesson.day : 0);
-  const weekList = ['Неделя-1','Неделя-2'].map((x: string) => x);
-  // const weekList = ['Неделя-1','Неделя-2','Неделя-4','Неделя-5','Неделя-6','Неделя-7'].map((x: string) => x);
+  const weekList = ['Неделя-1','Неделя-2'];
   const [week, setWeek] = useState<number>(thisLesson ? thisLesson.week : 0);
   const [name, setName] = useState<string>(thisLesson ? thisLesson.name : '');
   const [timeBegin, setTimeBegin] = useState<string>(thisLesson ? thisLesson.time[0] : '');
@@ -65,9 +64,9 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
 
       <ScrollView><StyledView className={'flex-1 space-y-3 bg-gray-700'}>
         <StyledView className='flex space-y-1'>
-          <StyledView><Input label={'Пара'} value={period} action={setPeriod}/></StyledView>
+          <StyledView><InputParameter label={'Пара'} value={period} action={setPeriod}/></StyledView>
           <StyledView>
-            <Select
+            <SelectParameter
               label='День'
               options={dayList}
               defaultIndex={ day }
@@ -75,13 +74,13 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
               />
           </StyledView>
           {/* <StyledView><Input label={'День'} value={day} action={setDay}/></StyledView> */}
-          <StyledView><Input label={'Название предмета'} value={name} action={setName}/></StyledView>
-          <StyledView><Input label={'Кабинет'} value={auditorium} action={setAuditorium} /></StyledView>
-          <StyledView><Input label={'Имя преподвавтеля'} value={teacher} action={setTeacher} /></StyledView>
+          <StyledView><InputParameter label={'Название предмета'} value={name} action={setName}/></StyledView>
+          <StyledView><InputParameter label={'Кабинет'} value={auditorium} action={setAuditorium} /></StyledView>
+          <StyledView><InputParameter label={'Имя преподвавтеля'} value={teacher} action={setTeacher} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
           <StyledView>
-            <Select
+            <SelectParameter
               label='Неделя'
               options={weekList}
               defaultIndex={ week }
@@ -89,8 +88,8 @@ export default function LessonPage({ route, navigation }: LessonPageProps) {
               />
           </StyledView>
           {/* <StyledView><Input label={'Неделя'} value={week} action={setWeek}/></StyledView> */}
-          <StyledView><Input label={'Начало'} value={timeBegin} action={setTimeBegin} /></StyledView>
-          <StyledView><Input label={'Конец'} value={timeEnd} action={setTimeEnd} /></StyledView>
+          <StyledView><InputParameter label={'Начало'} value={timeBegin} action={setTimeBegin} /></StyledView>
+          <StyledView><InputParameter label={'Конец'} value={timeEnd} action={setTimeEnd} /></StyledView>
           {/* <StyledView><Input label={'Уведомлять за'} value={Period} action={setPeriod} /></StyledView> */}
         </StyledView>
         {/* <StyledView className='flex space-y-1'> */}

@@ -24,13 +24,15 @@ const App = () => {
 
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Schedule'>
-        <Stack.Screen name='Schedule' component={SchedulePage} options={{ headerShown: false, statusBarHidden: true, navigationBarHidden: true, autoHideHomeIndicator: true }} />
-        <Stack.Screen name='Lesson' component={LessonPage} options={{ headerShown: false, statusBarHidden: true, navigationBarHidden: true, autoHideHomeIndicator: true }} />
-        <Stack.Screen name='Setting' component={SettingPage} options={{ headerShown: false, statusBarHidden: true, navigationBarHidden: true, autoHideHomeIndicator: true }} />
+        <Stack.Screen name='Schedule' component={SchedulePage} options={{ headerShown: false }} />
+        <Stack.Screen name='Lesson' component={LessonPage} options={{ headerShown: false }} />
+        <Stack.Screen name='Setting' component={SettingPage} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+// statusBarHidden: true, navigationBarHidden: true, autoHideHomeIndicator: true
 
 export default withExpoSnack(App);
 // eas build --profile development --platform android

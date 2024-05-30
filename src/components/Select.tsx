@@ -8,15 +8,30 @@ const StyledView = styled(View)
 const StyledText = styled(Text)
 
 interface SelectProps {
-  label: string;
+  label?: string;
   options: string[];
   defaultIndex?: number;
   action: (index: number) => void;
 }
 
-export function Select({ label, options, defaultIndex = 0, action }: SelectProps) {
+
+export function Select({ options, defaultIndex = 0, action }: SelectProps) {
   return (
-    <StyledView className='flex h-max flex-row p-1 border-2 border-gray-200 bg-gray-700'>
+    <StyledView className='flex flex-row border-2 border-gray-200'>
+        <SelectDropdown
+          renderButton={(selectedItem, isOpened) => _renderButton(selectedItem, isOpened)}
+          renderItem={(item, index, isSelected) => _renderItem(item, index, isSelected)}
+          data={options}
+          defaultValueByIndex={defaultIndex}
+          onSelect={(selectedItem, index) => { action(index) }}
+        />
+    </StyledView>
+  );
+}
+
+export function SelectParameter({ label, options, defaultIndex = 0, action }: SelectProps) {
+  return (
+    <StyledView className='flex flex-row p-1 border-2 border-gray-200 bg-gray-700'>
       <StyledView className='flex w-24 justify-center items-center bg-gray-600'>
         <StyledText className='text-1xl text-white'>{label}</StyledText>
       </StyledView>
@@ -35,25 +50,26 @@ export function Select({ label, options, defaultIndex = 0, action }: SelectProps
     </StyledView>
   );
 
-  function _renderButton(selectedItem: any, isOpened: boolean): React.ReactNode {
-    return (
-      <StyledView>
-        <StyledView className='p-1 justify-center items-center bg-gray-600'>
-          <StyledText className='text-1xl text-white'>
-            {selectedItem}
-          </StyledText>
-        </StyledView>
-      </StyledView>
-    );
-  }
+}
 
-  function _renderItem(item: any, index: number, isSelected: boolean): React.ReactNode {
-    return (
-      <StyledView>
-        <StyledView className='flex-1 p-1 justify-center items-center bg-gray-600 border-2 border-gray-700'>
-          <StyledText className='text-1xl text-white'>{item}</StyledText>
-        </StyledView>
+function _renderButton(selectedItem: any, isOpened: boolean): React.ReactNode {
+  return (
+    <StyledView>
+      <StyledView className='p-1 justify-center items-center bg-gray-600'>
+        <StyledText className='text-1xl text-white'>
+          {selectedItem}
+        </StyledText>
       </StyledView>
-    );
-  }
+    </StyledView>
+  );
+}
+
+function _renderItem(item: any, index: number, isSelected: boolean): React.ReactNode {
+  return (
+    <StyledView>
+      <StyledView className='flex-1 justify-center items-center bg-gray-600 border-2 border-gray-700'>
+        <StyledText className='text-1xl text-white'>{item}</StyledText>
+      </StyledView>
+    </StyledView>
+  );
 }
