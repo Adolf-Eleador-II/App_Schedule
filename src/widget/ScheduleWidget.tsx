@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexWidget, IconWidget, ListWidget, TextWidget } from 'react-native-android-widget';
+import { FlexWidget, ListWidget, TextWidget } from 'react-native-android-widget';
 import type { Lesson } from '../Lesson'
 
 interface ScheduleWidgetProps {

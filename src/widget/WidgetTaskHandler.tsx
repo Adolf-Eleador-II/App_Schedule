@@ -1,5 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import type { WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { ScheduleWidget } from './ScheduleWidget';
 import * as LessonClass from '../Lesson'

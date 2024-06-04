@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-// import { DayOfWeekName } from '../Lesson'
+import { View, Text } from 'react-native';
 
 import SelectDropdown from 'react-native-select-dropdown';
 import { styled } from 'nativewind';
@@ -15,7 +14,7 @@ interface SelectProps {
 }
 
 
-export function Select({ options, defaultIndex = 0, action }: SelectProps) {
+export function Select({ options, defaultIndex = 0, action }: SelectProps): ReactNode {
   return (
     <StyledView className='flex flex-row border-2 border-gray-200'>
         <SelectDropdown

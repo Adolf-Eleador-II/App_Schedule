@@ -1,15 +1,12 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView } from 'react-native';
 import * as LessonClass from '../Lesson'
 
 import { Button, ButtonText } from '../components/Button';
 import { InputParameter } from '../components/Input';
 import { SelectParameter } from '../components/Select';
 
-import { StyledComponent, styled } from 'nativewind';
+import { styled } from 'nativewind';
 import { AntDesign } from '@expo/vector-icons';
 const StyledView = styled(View)
 const StyledText = styled(Text)

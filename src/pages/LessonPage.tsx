@@ -1,7 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as LessonClass from '../Lesson'
 
 import { Button } from '../components/Button';
@@ -18,7 +16,7 @@ interface LessonPageProps {
   navigation: any;
 }
 
-export default function LessonPage({ route, navigation }: LessonPageProps) {
+export default function LessonPage({ route, navigation }: LessonPageProps): ReactNode {
   const localLessonClass = new LessonClass.LessonList();
   const { thisLesson } = route.params;
 

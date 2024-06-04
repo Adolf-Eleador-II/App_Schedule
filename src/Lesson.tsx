@@ -119,7 +119,7 @@ export class LessonList {
 
 async function widgetUpdate() {
   const today = new Date().getDay();
-
+  
   const localLessonClass = new LessonList();
   await localLessonClass.load();
   const dayLessons = localLessonClass.getDayLessons(DayOfWeekName[today], getIndexWeek());
