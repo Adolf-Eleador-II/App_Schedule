@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { requestWidgetUpdate } from "react-native-android-widget";
-import { ScheduleWidget } from "./widget/ScheduleWidget";
+import { addSchedulePushNotification, cancelPushNotification } from "./notification/ScheduleNotifications";
 
 export const DayOfWeekName = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'] as const;
 export type DayOfWeekNameType = typeof DayOfWeekName[number];;
@@ -18,18 +17,10 @@ export interface Lesson {
   name: string;
   auditorium: string;
   teacher: string;
-}
 
-export function getIndexWeek(): number {
-  const countWeek = 2;
-  const now = new Date();
-  let date;
-  if (now.getMonth() < 9) date = new Date(`${now.getFullYear() - 1}-09-01T00:00:00.000Z`);
-  else date = new Date(`${now.getFullYear()}-09-01T00:00:00.000Z`);
-
-  const weekIndex = Math.round((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24 * 7)) % countWeek;
-
-  return +weekIndex;
+  hidden: boolean;
+  notification: boolean;
+  identifiersPushNotification?: string;
 }
 
 export class LessonList {
@@ -37,11 +28,14 @@ export class LessonList {
   // console.log("Lesson debag:\n" + JSON.stringify(this.lessons, null, 2));
 
   async replace(oldLesson: Lesson, newLesson: Lesson) {
+    if(newLesson.notification) newLesson.identifiersPushNotification = await addSchedulePushNotification(newLesson);
     await this.load();
     if (oldLesson) {
       const i = this.lessons.findIndex((x: Lesson) => {
         return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
       });
+      let _;
+      if (_ = this.lessons[i].identifiersPushNotification) cancelPushNotification(_); 
       if (i != -1) this.lessons.splice(i, 1);
 
       const j = this.lessons.findIndex((x: Lesson) => {
@@ -53,7 +47,7 @@ export class LessonList {
     else {
       this.lessons.push(newLesson);
     }
-    this.save();
+    await this.save();
   }
 
   async remove(oldLesson: Lesson) {
@@ -61,8 +55,10 @@ export class LessonList {
     const i = this.lessons.findIndex((x: Lesson) => {
       return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
     });
+    let _;
+    (_ = this.lessons[i].identifiersPushNotification) ? cancelPushNotification(_) : null; 
     if (i != -1) this.lessons.splice(i, 1);
-    this.save();
+    await this.save();
   }
 
   getDayLessons(day: DayOfWeekNameType, indexWeek: number): Lesson[] {
@@ -82,6 +78,7 @@ export class LessonList {
 
 
   async load() {
+    // console.log('load');
     try {
       let _: string | null;
       this.lessons = (_ = await AsyncStorage.getItem('lessons')) ? JSON.parse(_) : []
@@ -95,9 +92,9 @@ export class LessonList {
   }
 
   async save() {
+    // console.log('save');
     try {
       await AsyncStorage.setItem('lessons', JSON.stringify(this.lessons));
-      widgetUpdate();
     } catch (e) {
       console.log('error\n' + e)
     }
@@ -117,17 +114,16 @@ export class LessonList {
   }
 }
 
-async function widgetUpdate() {
-  const today = new Date().getDay();
-  
-  const localLessonClass = new LessonList();
-  await localLessonClass.load();
-  const dayLessons = localLessonClass.getDayLessons(DayOfWeekName[today], getIndexWeek());
-  requestWidgetUpdate({
-    widgetName: 'Schedule',
-    renderWidget: () => <ScheduleWidget lessons={dayLessons} dayName={DayOfWeekName[today]} />,
-    widgetNotFound: () => { }
-  })
+export function getIndexWeek(): number {
+  const countWeek = 2;
+  const now = new Date();
+  let date;
+  if (now.getMonth() < 9) date = new Date(`${now.getFullYear() - 1}-09-01T00:00:00.000Z`);
+  else date = new Date(`${now.getFullYear()}-09-01T00:00:00.000Z`);
+
+  const weekIndex = Math.round((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24 * 7)) % countWeek;
+
+  return +weekIndex;
 }
 
 const lessonsDefault = [

@@ -7,11 +7,11 @@ const widgetConfig: WithAndroidWidgetsParams = {
       name: 'Schedule',
       minWidth: '120dp',
       minHeight: '120dp',
-      targetCellWidth: 2,
-      targetCellHeight: 2,
+      targetCellWidth: 3,
+      targetCellHeight: 1,
 
       description: 'Widget',
-      previewImage: './assets/widget-preview/hello.png',
+      previewImage: './assets/widget-preview/ScheduleWidgetPreview.png',
 
       updatePeriodMillis: 3600000,
       resizeMode: 'horizontal|vertical'
@@ -40,6 +40,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: './assets/adaptive-icon.png',
       backgroundColor: '#FFFFFF',
     },
+    googleServicesFile: './secret/google-services.json',
     package: "com.user135792468.App_Schedule"
   },
   web: {

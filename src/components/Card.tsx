@@ -8,10 +8,10 @@ const StyledText = styled(Text)
 
 interface CardProps {
     lesson: Lesson;
-    action: () => void;
+    onPress: () => void;
 }
 
-export default function Card({lesson, action}:CardProps): ReactNode {
+export default function Card({lesson, onPress: action}:CardProps): ReactNode {
   return (
     <Pressable onPress={action}>
       <StyledView className='flex flex-row h-max p-1 border-gray-200 border-2 bg-gray-700'>

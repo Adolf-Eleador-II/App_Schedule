@@ -8,6 +8,7 @@ import { SelectParameter } from '../components/Select';
 
 import { styled } from 'nativewind';
 import { AntDesign } from '@expo/vector-icons';
+import * as Notifications from '../notification/ScheduleNotifications';
 const StyledView = styled(View)
 const StyledText = styled(Text)
 
@@ -23,25 +24,29 @@ export default function SettingPage({ navigation }: any) {
   return (
     <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
       <StyledView className='flex flex-row space-x-2'>
-        <Button action={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={19} color="white" /></Button>
+        <Button onPress={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={19} color="white" /></Button>
         <StyledText className={'text-3xl text-white'}>Настройки:</StyledText>
       </StyledView>
 
       <ScrollView><StyledView className={'flex-1 space-y-3 bg-gray-700'}>
         <StyledView className='flex space-y-1'>
-          <StyledView><ButtonText name={"Экспорт"} action={() => { return 0 }} /></StyledView>
-          <StyledView><ButtonText name={"Импорт"} action={() => { return 0 }} /></StyledView>
+          <StyledView><ButtonText name={"Экспорт"} onPress={() => { return 0 }} /></StyledView>
+          <StyledView><ButtonText name={"Импорт"} onPress={() => { return 0 }} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><ButtonText name={"Сброс расписания"} action={deleteLessons} /></StyledView>
+          <StyledView><ButtonText name="Press to cancel a notification" onPress={async () => { await Notifications.cancelAllPushNotification(); }}/></StyledView>
+          <StyledView><ButtonText name="Press to get a notification" onPress={async () => { await Notifications.getAllPushNotification(); }}/></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><InputParameter label='День' value={text1} action={setText1} /></StyledView>
+          <StyledView><ButtonText name={"Сброс расписания"} onPress={deleteLessons} /></StyledView>
+        </StyledView>
+        <StyledView className='flex space-y-1'>
+          <StyledView><InputParameter label='День' value={text1} onChange={setText1} /></StyledView>
           <StyledView>
             <SelectParameter
               label='Неделя'
               options={LessonClass.DayOfWeekName.map((x: string) => x)}
-              action={setText2}
+              onSelect={setText2}
               />
           </StyledView>
           <StyledView><StyledText className='text-1xl text-white'>{text2}</StyledText></StyledView>

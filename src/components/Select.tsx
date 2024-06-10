@@ -10,11 +10,11 @@ interface SelectProps {
   label?: string;
   options: string[];
   defaultIndex?: number;
-  action: (index: number) => void;
+  onSelect: (index: number) => void;
 }
 
 
-export function Select({ options, defaultIndex = 0, action }: SelectProps): ReactNode {
+export function Select({ options, defaultIndex = 0, onSelect: action }: SelectProps): ReactNode {
   return (
     <StyledView className='flex flex-row border-2 border-gray-200'>
         <SelectDropdown
@@ -28,7 +28,7 @@ export function Select({ options, defaultIndex = 0, action }: SelectProps): Reac
   );
 }
 
-export function SelectParameter({ label, options, defaultIndex = 0, action }: SelectProps) {
+export function SelectParameter({ label, options, defaultIndex = 0, onSelect: action }: SelectProps) {
   return (
     <StyledView className='flex flex-row p-1 border-2 border-gray-200 bg-gray-700'>
       <StyledView className='flex w-24 justify-center items-center bg-gray-600'>

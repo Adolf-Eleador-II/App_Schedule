@@ -9,10 +9,10 @@ const StyledTextInput = styled(TextInput)
 interface InputProps {
     label: string;
     value: string;
-    action: (value: string) => void;
+    onChange: (value: string) => void;
   }
   
-  export function InputParameter({ label, value, action }: InputProps): ReactNode {
+  export function InputParameter({ label, value, onChange: action }: InputProps): ReactNode {
     return (
       <StyledView className='flex flex-row h-max p-1 border-2 border-gray-200 bg-gray-700'>
   

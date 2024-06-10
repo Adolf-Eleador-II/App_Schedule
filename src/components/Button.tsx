@@ -9,10 +9,10 @@ const StyledText = styled(Text)
 
 interface ButtonTextProps {
   name: string;
-  action: () => void;
+  onPress: () => void;
 }
 
-export function ButtonText({ name, action }: ButtonTextProps): ReactNode {
+export function ButtonText({ name, onPress: action }: ButtonTextProps): ReactNode {
   return (
     <Pressable onPress={action}>
       <StyledView className='p-1 border-2 border-gray-200'>
@@ -24,10 +24,10 @@ export function ButtonText({ name, action }: ButtonTextProps): ReactNode {
 
 interface ButtonProps {
   children?: ReactNode;
-  action: () => void;
+  onPress: () => void;
 }
 
-export function Button({ children, action }: ButtonProps): ReactNode {
+export function Button({ children, onPress: action }: ButtonProps): ReactNode {
   return (
     <Pressable onPress={action}>
       <StyledView className='p-1 border-2 border-gray-200'>

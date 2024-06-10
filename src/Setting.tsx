@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 export interface Setting {
   indexDay: number;
   indexWeek: number;
