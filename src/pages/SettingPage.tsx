@@ -34,8 +34,8 @@ export default function SettingPage({ navigation }: any) {
           <StyledView><ButtonText name={"Импорт"} onPress={() => { return 0 }} /></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
-          <StyledView><ButtonText name="Press to cancel a notification" onPress={async () => { await Notifications.cancelAllPushNotification(); }}/></StyledView>
-          <StyledView><ButtonText name="Press to get a notification" onPress={async () => { await Notifications.getAllPushNotification(); }}/></StyledView>
+          <StyledView><ButtonText name="Отменить все уведомления" onPress={async () => { await Notifications.cancelAllPushNotification(); }}/></StyledView>
+          <StyledView><ButtonText name="Показать все уведомления" onPress={async () => { await Notifications.getAllPushNotification(); }}/></StyledView>
         </StyledView>
         <StyledView className='flex space-y-1'>
           <StyledView><ButtonText name={"Сброс расписания"} onPress={deleteLessons} /></StyledView>

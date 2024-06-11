@@ -20,7 +20,7 @@ export interface Lesson {
 
   hidden: boolean;
   notification: boolean;
-  identifiersPushNotification?: string;
+  identifiersPushNotification?: string | undefined;
 }
 
 export class LessonList {
@@ -34,8 +34,9 @@ export class LessonList {
       const i = this.lessons.findIndex((x: Lesson) => {
         return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
       });
-      let _;
-      if (_ = this.lessons[i].identifiersPushNotification) cancelPushNotification(_); 
+      
+      const _ = this.lessons[i]?.identifiersPushNotification;
+      if (_ != undefined) cancelPushNotification(_); 
       if (i != -1) this.lessons.splice(i, 1);
 
       const j = this.lessons.findIndex((x: Lesson) => {
@@ -55,15 +56,15 @@ export class LessonList {
     const i = this.lessons.findIndex((x: Lesson) => {
       return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
     });
-    let _;
-    (_ = this.lessons[i].identifiersPushNotification) ? cancelPushNotification(_) : null; 
+    const _ = this.lessons[i]?.identifiersPushNotification;
+    if (_ != undefined) cancelPushNotification(_);
     if (i != -1) this.lessons.splice(i, 1);
     await this.save();
   }
 
   getDayLessons(day: DayOfWeekNameType, indexWeek: number): Lesson[] {
     return this.lessons
-      .filter(x => (DayOfWeekName[x.day] == day && x.week == indexWeek))
+      .filter(x => (DayOfWeekName[x.day] == day && (x.week == indexWeek || x.week == 0)))
       .sort(function (a, b) {
         return (a.period > b.period) ? 1 : -1
       });
@@ -123,10 +124,48 @@ export function getIndexWeek(): number {
 
   const weekIndex = Math.round((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24 * 7)) % countWeek;
 
-  return +weekIndex;
+  return +weekIndex+1;
 }
 
 const lessonsDefault = [
+  {
+    period: 2,
+    day: 4,
+    week: 1,
+    time: ['10:00', '11:20'],
+    name: 'ФДТ: Основы имиджовой коммуникации (лек)',
+    auditorium: 'К706',
+    teacher: ''
+  },  
+  {
+    period: 3,
+    day: 4,
+    week: 1,
+    time: ['11:30', '12:50'],
+    name: 'ФДТ: Основы имиджовой коммуникации (лек)',
+    auditorium: 'К706',
+    teacher: ''
+  },
+  {
+    period: 2,
+    day: 4,
+    week: 2,
+    time: ['10:00', '11:20'],
+    name: 'Производственная практика, научно иследовательская работа (CDIO), (пр)',
+    auditorium: 'А320',
+    teacher: ''
+  },  
+  {
+    period: 3,
+    day: 4,
+    week: 2,
+    time: ['11:30', '12:50'],
+    name: 'Производственная практика, научно иследовательская работа (CDIO), (пр)',
+    auditorium: 'А320',
+    teacher: ''
+  },
+
+
   {
     period: 2,
     day: 1,
@@ -181,24 +220,24 @@ const lessonsDefault = [
     auditorium: 'У105',
     teacher: ''
   },
-  {
-    period: 2,
-    day: 4,
-    week: 0,
-    time: ['10:00', '11:20'],
-    name: 'ФДТ: Основы подготовки технической документации (пр)',
-    auditorium: 'У408',
-    teacher: ''
-  },
-  {
-    period: 3,
-    day: 4,
-    week: 0,
-    time: ['11:30', '12:50'],
-    name: 'Система управления мехатронными комплексами (лаб)',
-    auditorium: 'У403',
-    teacher: ''
-  },
+  // {
+  //   period: 2,
+  //   day: 4,
+  //   week: 0,
+  //   time: ['10:00', '11:20'],
+  //   name: 'ФДТ: Основы подготовки технической документации (пр)',
+  //   auditorium: 'У408',
+  //   teacher: ''
+  // },
+  // {
+  //   period: 3,
+  //   day: 4,
+  //   week: 0,
+  //   time: ['11:30', '12:50'],
+  //   name: 'Система управления мехатронными комплексами (лаб)',
+  //   auditorium: 'У403',
+  //   teacher: ''
+  // },
   {
     period: 4,
     day: 4,

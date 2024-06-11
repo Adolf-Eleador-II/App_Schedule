@@ -18,19 +18,19 @@ export default function SchedulePage({ navigation }: any): ReactNode {
   const [lessons, setLessons] = useState<LessonClass.LessonsDay[]>([]);
 
   const weekList = ['Неделя-1','Неделя-2'];
-  const [weekIndex, setWeekIndex] = useState<number>(LessonClass.getIndexWeek());
-
+  const [weekIndex, setWeekIndex] = useState<number>(LessonClass.getIndexWeek()-1);
+  
   const load = async () => {
     await localLessonClass.load();
-    setLessons(localLessonClass.getWeekLessons(weekIndex));
+    setLessons(localLessonClass.getWeekLessons(weekIndex+1));
   }
 
   const loadDefault = () => {
     localLessonClass.loadDefault();
-    setLessons(localLessonClass.getWeekLessons(weekIndex));
+    setLessons(localLessonClass.getWeekLessons(weekIndex+1));
   }
 
-  const otherButton = () => {
+  const SettingButton = () => {
     navigation.navigate('Setting');
   }
 
@@ -53,7 +53,7 @@ export default function SchedulePage({ navigation }: any): ReactNode {
       <StyledView className='flex flex-row items-stretch justify-between space-x-2'>
         <ButtonText name={"Загрузить"} onPress={load}/>
         <ButtonText name={"Загрузить заготовку"} onPress={loadDefault}/>
-        <Button onPress={otherButton}><AntDesign name='setting' size={19} color="white"/></Button>
+        <Button onPress={SettingButton}><AntDesign name='setting' size={19} color="white"/></Button>
       </StyledView>
 
     </StyledView>

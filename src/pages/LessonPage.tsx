@@ -23,7 +23,7 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
   const [period, setPeriod] = useState<string>(thisLesson?.period.toString() ?? '1');
   const dayList = LessonClass.DayOfWeekName.map((x: string) => x);
   const [day, setDay] = useState<number>(thisLesson?.day ?? 1);
-  const weekList = ['Неделя-1', 'Неделя-2'];
+  const weekList = ['Еженедльно','Неделя-1', 'Неделя-2'];
   const [week, setWeek] = useState<number>(thisLesson?.week ?? 0);
   const [name, setName] = useState<string>(thisLesson?.name ?? '');
   const [timeBegin, setTimeBegin] = useState<string>(thisLesson?.time[0] ?? '');
