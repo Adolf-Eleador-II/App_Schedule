@@ -14,7 +14,7 @@ interface SelectProps {
 }
 
 
-export function Select({ options, defaultIndex = 0, onSelect: action }: SelectProps): ReactNode {
+export function SelectValueLabel({ options, defaultIndex = 0, onSelect: action }: SelectProps): ReactNode {
   return (
     <StyledView className='flex flex-row border-2 border-gray-200'>
         <SelectDropdown
@@ -28,7 +28,7 @@ export function Select({ options, defaultIndex = 0, onSelect: action }: SelectPr
   );
 }
 
-export function SelectParameter({ label, options, defaultIndex = 0, onSelect: action }: SelectProps) {
+export function SelectLabel({ label, options, defaultIndex = 0, onSelect: action }: SelectProps): ReactNode {
   return (
     <StyledView className='flex flex-row p-1 border-2 border-gray-200 bg-gray-700'>
       <StyledView className='flex w-24 justify-center items-center bg-gray-600'>

@@ -5,7 +5,7 @@ import * as LessonClass from '../Lesson'
 
 import Card from '../components/Card';
 import { Button, ButtonText } from '../components/Button';
-import { Select } from '../components/Select';
+import { SelectValueLabel } from '../components/Select';
 
 import { styled } from 'nativewind';
 import { AntDesign, Feather } from '@expo/vector-icons';
@@ -40,7 +40,7 @@ export default function SchedulePage({ navigation }: any): ReactNode {
     <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
       <StyledView className='flex flex-row justify-between space-x-2'>
         <StyledText className={'text-3xl text-white'}>Расписание:</StyledText>
-        <StyledView><Select options={weekList} onSelect={setWeekIndex} defaultIndex={weekIndex}/></StyledView>
+        <StyledView><SelectValueLabel options={weekList} onSelect={setWeekIndex} defaultIndex={weekIndex}/></StyledView>
         <Button onPress={() => { navigation.navigate('Lesson', {}) }}><Feather name='plus' size={19} color="white" /></Button>
       </StyledView>
 

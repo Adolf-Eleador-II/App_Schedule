@@ -4,7 +4,7 @@ import * as LessonClass from '../Lesson'
 
 import { Button } from '../components/Button';
 import { InputParameter } from '../components/Input';
-import { SelectParameter } from '../components/Select';
+import { SelectLabel } from '../components/Select';
 import { AntDesign, Feather } from '@expo/vector-icons';
 
 import { styled } from 'nativewind';
@@ -71,7 +71,7 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
         <StyledView className='flex space-y-1'>
           <StyledView><InputParameter label={'Пара'} value={period} onChange={setPeriod} /></StyledView>
           <StyledView>
-            <SelectParameter
+            <SelectLabel
               label='День'
               options={dayList}
               defaultIndex={day}
@@ -84,7 +84,7 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
         </StyledView>
         <StyledView className='flex space-y-1'>
           <StyledView>
-            <SelectParameter
+            <SelectLabel
               label='Неделя'
               options={weekList}
               defaultIndex={week}
