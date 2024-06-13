@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useState, useCallback, ReactNode } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import * as LessonClass from '../Lesson'
+import * as LessonClass from '../class/Lesson'
 
 import Card from '../components/Card';
 import { Button, ButtonText } from '../components/Button';
@@ -14,7 +14,7 @@ const StyledView = styled(View)
 const StyledText = styled(Text)
 
 export default function SchedulePage({ navigation }: any): ReactNode {
-  const localLessonClass = new LessonClass.LessonList();
+  const localLessonClass = new LessonClass.LessonClass();
   const [lessons, setLessons] = useState<LessonClass.LessonsDay[]>([]);
 
   const weekList = ['Неделя-1','Неделя-2'];
@@ -22,11 +22,6 @@ export default function SchedulePage({ navigation }: any): ReactNode {
   
   const load = async () => {
     await localLessonClass.load();
-    setLessons(localLessonClass.getWeekLessons(weekIndex+1));
-  }
-
-  const loadDefault = () => {
-    localLessonClass.loadDefault();
     setLessons(localLessonClass.getWeekLessons(weekIndex+1));
   }
 
@@ -52,7 +47,6 @@ export default function SchedulePage({ navigation }: any): ReactNode {
 
       <StyledView className='flex flex-row items-stretch justify-between space-x-2'>
         <ButtonText name={"Загрузить"} onPress={load}/>
-        <ButtonText name={"Загрузить заготовку"} onPress={loadDefault}/>
         <Button onPress={SettingButton}><AntDesign name='setting' size={19} color="white"/></Button>
       </StyledView>
 

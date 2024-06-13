@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlexWidget, ListWidget, TextWidget, requestWidgetUpdate } from 'react-native-android-widget';
-import * as LessonClass from '../Lesson'
+import * as LessonClass from '../class/Lesson'
 
 interface ScheduleWidgetProps {
   dayName: string,
@@ -11,7 +11,7 @@ export async function widgetUpdate() {
   console.log('widget update')
   const today = new Date().getDay();
   
-  const localLessonClass = new LessonClass.LessonList();
+  const localLessonClass = new LessonClass.LessonClass();
   await localLessonClass.load();
   const dayLessons = localLessonClass.getDayLessons(LessonClass.DayOfWeekName[today], LessonClass.getIndexWeek());
   requestWidgetUpdate({

@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import * as LessonClass from '../Lesson'
+import * as LessonClass from '../class/Lesson'
 
 import { Button } from '../components/Button';
 import { InputParameter } from '../components/Input';
@@ -17,7 +17,7 @@ interface LessonPageProps {
 }
 
 export default function LessonPage({ route, navigation }: LessonPageProps): ReactNode {
-  const localLessonClass = new LessonClass.LessonList();
+  const localLessonClass = new LessonClass.LessonClass();
   const { thisLesson } = route.params;
 
   const [period, setPeriod] = useState<string>(thisLesson?.period.toString() ?? '1');

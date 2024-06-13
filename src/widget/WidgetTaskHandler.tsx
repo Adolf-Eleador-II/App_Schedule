@@ -1,7 +1,7 @@
 import React from 'react';
 import type { WidgetTaskHandlerProps } from 'react-native-android-widget';
 import { ScheduleWidget } from './ScheduleWidget';
-import * as LessonClass from '../Lesson'
+import * as LessonClass from '../class/Lesson'
 
 const nameToWidget = {
   Schedule: ScheduleWidget,
@@ -16,7 +16,7 @@ export async function WidgetTaskHandler(props: WidgetTaskHandlerProps) {
   // const data: Lesson[] = (_ = await AsyncStorage.getItem('lessons')) ? JSON.parse(_) : [];
   // const dayLessons = data.filter((x: Lesson) => x?.day === today).sort( function (a,b) { return a.time[0] < b.time[0] ? 1 : -1; });
   
-  const localLessonClass = new LessonClass.LessonList();
+  const localLessonClass = new LessonClass.LessonClass();
   await localLessonClass.load();
   const dayLessons = localLessonClass.getDayLessons(LessonClass.DayOfWeekName[today], LessonClass.getIndexWeek());
 

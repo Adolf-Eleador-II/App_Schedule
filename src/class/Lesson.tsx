@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { addSchedulePushNotification, cancelPushNotification } from "./notification/ScheduleNotifications";
+import { addSchedulePushNotification, cancelPushNotification } from "../notification/ScheduleNotifications";
 
 export const DayOfWeekName = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'] as const;
 export type DayOfWeekNameType = typeof DayOfWeekName[number];;
@@ -23,20 +23,20 @@ export interface Lesson {
   identifiersPushNotification?: string | undefined;
 }
 
-export class LessonList {
+export class LessonClass {
   private lessons: Lesson[];
   // console.log("Lesson debag:\n" + JSON.stringify(this.lessons, null, 2));
 
   async replace(oldLesson: Lesson, newLesson: Lesson) {
-    if(newLesson.notification) newLesson.identifiersPushNotification = await addSchedulePushNotification(newLesson);
+    if (newLesson.notification) newLesson.identifiersPushNotification = await addSchedulePushNotification(newLesson);
     await this.load();
     if (oldLesson) {
       const i = this.lessons.findIndex((x: Lesson) => {
         return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
       });
-      
+
       const _ = this.lessons[i]?.identifiersPushNotification;
-      if (_ != undefined) cancelPushNotification(_); 
+      if (_ != undefined) cancelPushNotification(_);
       if (i != -1) this.lessons.splice(i, 1);
 
       const j = this.lessons.findIndex((x: Lesson) => {
@@ -88,8 +88,10 @@ export class LessonList {
     }
   }
 
-  loadDefault() {
+  async loadDefault() {
+    await this.load();
     this.lessons = lessonsDefault;
+    await this.save();
   }
 
   async save() {
@@ -109,6 +111,12 @@ export class LessonList {
     }
   }
 
+  async allNotificationOff() {
+    await this.load();
+    this.lessons.map((x) => { x.notification = false; x.identifiersPushNotification = undefined })
+    await this.save();
+  }
+
   constructor() {
     this.lessons = [];
     // this.load();
@@ -124,7 +132,7 @@ export function getIndexWeek(): number {
 
   const weekIndex = Math.round((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24 * 7)) % countWeek;
 
-  return +weekIndex+1;
+  return +weekIndex + 1;
 }
 
 const lessonsDefault = [
@@ -136,7 +144,7 @@ const lessonsDefault = [
     name: 'ФДТ: Основы имиджовой коммуникации (лек)',
     auditorium: 'К706',
     teacher: ''
-  },  
+  },
   {
     period: 3,
     day: 4,
@@ -154,7 +162,7 @@ const lessonsDefault = [
     name: 'Производственная практика, научно иследовательская работа (CDIO), (пр)',
     auditorium: 'А320',
     teacher: ''
-  },  
+  },
   {
     period: 3,
     day: 4,
