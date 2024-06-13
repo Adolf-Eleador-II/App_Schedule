@@ -6,6 +6,7 @@ export type DayOfWeekNameType = typeof DayOfWeekName[number];;
 
 export interface LessonsDay {
   name: DayOfWeekNameType;
+  hiddenOff: boolean;
   lessons: Lesson[];
 }
 
@@ -73,8 +74,9 @@ export class LessonClass {
   getWeekLessons(indexWeek: number): LessonsDay[] {
     return DayOfWeekName.map(x => ({
       name: x,
+      hiddenOff: false,
       lessons: this.getDayLessons(x, indexWeek)
-    }));
+    }) as LessonsDay);
   }
 
 
@@ -143,7 +145,9 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'ФДТ: Основы имиджовой коммуникации (лек)',
     auditorium: 'К706',
-    teacher: ''
+    teacher: '',
+    hidden: false,
+    notification: false
   },
   {
     period: 3,
@@ -152,7 +156,9 @@ const lessonsDefault = [
     time: ['11:30', '12:50'],
     name: 'ФДТ: Основы имиджовой коммуникации (лек)',
     auditorium: 'К706',
-    teacher: ''
+    teacher: '',
+    hidden: false,
+    notification: false
   },
   {
     period: 2,
@@ -161,7 +167,9 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Производственная практика, научно иследовательская работа (CDIO), (пр)',
     auditorium: 'А320',
-    teacher: ''
+    teacher: '',
+    hidden: false,
+    notification: false
   },
   {
     period: 3,
@@ -181,7 +189,9 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Системы управления базами данных (лаб)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin'
+    teacher: 'Dmitrii Kuzin',
+    hidden: false,
+    notification: false
   },
   {
     period: 3,
@@ -190,7 +200,9 @@ const lessonsDefault = [
     time: ['11:30', '12:50'],
     name: 'Системы управления базами данных (лаб)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin'
+    teacher: 'Dmitrii Kuzin',
+    hidden: false,
+    notification: false
   },
   {
     period: 1,
@@ -199,7 +211,9 @@ const lessonsDefault = [
     time: ['8:30', '9:50'],
     name: 'Системы управления базами данных (лек)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin'
+    teacher: 'Dmitrii Kuzin',
+    hidden: false,
+    notification: false
   },
   {
     period: 2,
@@ -208,7 +222,9 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Системы управления базами данных (лек)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin'
+    teacher: 'Dmitrii Kuzin',
+    hidden: false,
+    notification: false
   },
   {
     period: 4,
@@ -217,7 +233,9 @@ const lessonsDefault = [
     time: ['13:20', '14:40'],
     name: 'Технологии мультимедиа (лек)',
     auditorium: 'У106',
-    teacher: ''
+    teacher: '',
+    hidden: false,
+    notification: false
   },
   {
     period: 5,
@@ -253,7 +271,9 @@ const lessonsDefault = [
     time: ['13:20', '14:40'],
     name: 'Технологии мультимедиа (лаб)',
     auditorium: 'У105',
-    teacher: ''
+    teacher: '',
+    hidden: false,
+    notification: false
   },
   {
     period: 2,
@@ -262,7 +282,9 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Математические методы искусственного интелекта (лек)',
     auditorium: 'У903',
-    teacher: ''
+    teacher: '',
+    hidden: false,
+    notification: false
   },
   {
     period: 3,
@@ -271,7 +293,9 @@ const lessonsDefault = [
     time: ['11:30', '12:50'],
     name: 'Математические методы искусственного интелекта (лек)',
     auditorium: 'У903',
-    teacher: ''
+    teacher: '',
+    hidden: false,
+    notification: false
   },
   {
     period: 2,
@@ -280,7 +304,9 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Математические методы искусственного интелекта (лаб)',
     auditorium: 'У903',
-    teacher: 'Брыкин'
+    teacher: 'Брыкин',
+    hidden: false,
+    notification: false
   },
   {
     period: 3,
@@ -289,6 +315,8 @@ const lessonsDefault = [
     time: ['11:30', '12:50'],
     name: 'Математические методы искусственного интелекта (лаб)',
     auditorium: 'У903',
-    teacher: 'Брыкин'
+    teacher: 'Брыкин',
+    hidden: false,
+    notification: false
   },
 ] as Lesson[]
