@@ -16,7 +16,7 @@ interface SelectProps {
 
 export function SelectValueLabel({ options, defaultIndex = 0, onSelect: action }: SelectProps): ReactNode {
   return (
-    <StyledView className='flex flex-row border-2 border-gray-200'>
+    <StyledView className='border-2 border-gray-200'>
         <SelectDropdown
           renderButton={(selectedItem, isOpened) => _renderButton(selectedItem, isOpened)}
           renderItem={(item, index, isSelected) => _renderItem(item, index, isSelected)}
@@ -55,7 +55,7 @@ function _renderButton(selectedItem: any, isOpened: boolean): React.ReactNode {
   return (
     <StyledView>
       <StyledView className='p-1 justify-center items-center bg-gray-600'>
-        <StyledText className='text-1xl text-white'>
+        <StyledText className='text-base text-white'>
           {selectedItem}
         </StyledText>
       </StyledView>
@@ -67,7 +67,7 @@ function _renderItem(item: any, index: number, isSelected: boolean): React.React
   return (
     <StyledView>
       <StyledView className='flex-1 justify-center items-center bg-gray-600 border-2 border-gray-700'>
-        <StyledText className='text-1xl text-white'>{item}</StyledText>
+        <StyledText className='text-base text-white'>{item}</StyledText>
       </StyledView>
     </StyledView>
   );

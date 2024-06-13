@@ -26,7 +26,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',
-  userInterfaceStyle: 'automatic',
+  userInterfaceStyle: 'dark',
   splash: {
     image: './assets/splash.png',
     resizeMode: 'contain',
@@ -41,17 +41,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: '#FFFFFF',
     },
     googleServicesFile: './secret/google-services.json',
-    package: "com.user135792468.App_Schedule"
+    package: 'com.user135792468.App_Schedule'
   },
   web: {
-    favicon: "./assets/favicon.png"
+    favicon: './assets/favicon.png'
   },
   extra: {
     eas: {
-      projectId: "f3342abe-1c86-44e7-8f26-af5ceff00434"
+      projectId: 'f3342abe-1c86-44e7-8f26-af5ceff00434'
     }
   },
-  owner: "user135792468",
+  owner: 'user135792468',
   plugins: [['react-native-android-widget', widgetConfig]],
 });
 

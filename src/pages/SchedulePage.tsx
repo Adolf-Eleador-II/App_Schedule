@@ -31,11 +31,14 @@ export default function SchedulePage({ navigation }: any): ReactNode {
   useFocusEffect(useCallback(() => { load(); widgetUpdate(); }, [weekIndex]));
 
   return (
-    <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
-      <StyledView className='flex flex-row justify-between space-x-2'>
-        <StyledText className={'text-3xl text-white'}>Расписание:</StyledText>
-        <StyledView><SelectValueLabel options={weekList} onSelect={setWeekIndex} defaultIndex={weekIndex} /></StyledView>
-        <Button onPress={() => { navigation.navigate('Lesson', {}) }}><Feather name='plus' size={19} color="white" /></Button>
+    <StyledView className='flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'>
+      <StyledView className='flex flex-row justify-between items-center space-x-2'>
+        <StyledText className='text-3xl text-white'>Расписание:</StyledText>
+        <StyledView className='flex flex-row space-x-2'>
+          <StyledView><SelectValueLabel options={weekList} onSelect={setWeekIndex} defaultIndex={weekIndex} /></StyledView>
+          <StyledView><Button onPress={() => { navigation.navigate('Lesson', {}) }}><Feather name='plus' size={23} color="white" /></Button></StyledView>
+          <StyledView><Button onPress={SettingButton}><AntDesign name='setting' size={23} color="white" /></Button></StyledView>
+        </StyledView>
       </StyledView>
 
       <ScrollView >
@@ -44,10 +47,9 @@ export default function SchedulePage({ navigation }: any): ReactNode {
         })}
       </ScrollView>
 
-      <StyledView className='flex flex-row items-stretch justify-between space-x-2'>
+      {/* <StyledView className='flex flex-row items-stretch justify-between space-x-2'>
         <ButtonText name={"Загрузить"} onPress={load} />
-        <Button onPress={SettingButton}><AntDesign name='setting' size={19} color="white" /></Button>
-      </StyledView>
+      </StyledView> */}
 
     </StyledView>
   )
@@ -68,16 +70,16 @@ function ScheduleForDay({ dayOfWeek, dayLessonList, navigation, hiddenOff }: Sch
   let countHidden = 0;
   dayLessonList.map((x) => { if (x.hidden) countHidden++ })
   const buttonHide = (countHidden > 0)
-    ? <Pressable onPress={hiddenChange}><Feather name={hidden ? 'eye' : 'eye-off'} size={19} color='white' /></Pressable>
+    ? <Pressable onPress={hiddenChange}><Feather name={hidden ? 'eye' : 'eye-off'} size={23} color='white' /></Pressable>
     : [];
   if (dayLessonList.length != 0)
     return (
       <StyledView className='flex space-y-1 mt-3'>
-        <StyledView className='flex flex-row justify-between space-x-2'>
-          <StyledText className={'text-2xl text-white'}>{LessonClass.DayOfWeekName[dayOfWeek]}:</StyledText>
+        <StyledView className='flex flex-row items-center justify-between space-x-2'>
+          <StyledText className='text-2xl text-white'>{LessonClass.DayOfWeekName[dayOfWeek]}:</StyledText>
           <StyledView className='flex flex-row space-x-2'>
             {buttonHide}
-            {/* <Pressable onPress={() => { navigation.navigate('Lesson', { thisLesson: {day: dayOfWeek} as LessonClass.Lesson }) }}><Feather name='plus' size={19} color="white" /></Pressable> */}
+            {/* <Pressable onPress={() => { navigation.navigate('Lesson', { thisLesson: {day: dayOfWeek} as LessonClass.Lesson }) }}><Feather name='plus' size={23} color="white" /></Pressable> */}
           </StyledView>
         </StyledView>
         {dayLessonList.map((lesson: LessonClass.Lesson, i: number) => {

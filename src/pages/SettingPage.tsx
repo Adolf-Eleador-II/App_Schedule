@@ -31,8 +31,8 @@ export default function SettingPage({ navigation }: any) {
 
   return (
     <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
-      <StyledView className='flex flex-row space-x-2'>
-        <Button onPress={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={19} color="white" /></Button>
+      <StyledView className='flex flex-row items-center space-x-2'>
+        <Button onPress={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={23} color="white" /></Button>
         <StyledText className={'text-3xl text-white'}>Настройки:</StyledText>
       </StyledView>
 

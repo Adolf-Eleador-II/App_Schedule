@@ -62,8 +62,8 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
 
   return (
     <StyledView className={'flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'}>
-      <StyledView className='flex flex-row space-x-2'>
-        <Button onPress={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={19} color='white' /></Button>
+      <StyledView className='flex flex-row items-center space-x-2'>
+        <Button onPress={() => { navigation.goBack() }}><AntDesign name='arrowleft' size={23} color='white' /></Button>
         <StyledText className={'text-3xl text-white'}>Занятие:</StyledText>
       </StyledView>
 
@@ -100,14 +100,14 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
         {/* <StyledView><Input label={'Заметка'} value={Period} action={setPeriod} /></StyledView> */}
         {/* </StyledView> */}
         <StyledView className='flex flex-row justify-between space-x-2'>
-        <Button onPress={hiddenChange}><Feather name={ hidden ? 'eye-off' : 'eye'} size={19} color='white' /></Button>
-        <Button onPress={notificationChange}><Feather name={ notification ? 'bell' : 'bell-off'} size={19} color='white' /></Button>
+        <Button onPress={hiddenChange}><Feather name={ hidden ? 'eye-off' : 'eye'} size={23} color='white' /></Button>
+        <Button onPress={notificationChange}><Feather name={ notification ? 'bell' : 'bell-off'} size={23} color='white' /></Button>
         </StyledView>
       </StyledView></ScrollView>
 
       <StyledView className='flex flex-row justify-between space-x-2'>
-        <Button onPress={saveLesson}><Feather name='save' size={19} color='white' /></Button>
-        <Button onPress={deleteLesson}><AntDesign name='delete' size={19} color='white' /></Button>
+        <Button onPress={saveLesson}><Feather name='save' size={23} color='white' /></Button>
+        <Button onPress={deleteLesson}><AntDesign name='delete' size={23} color='white' /></Button>
       </StyledView>
     </StyledView>
   );
