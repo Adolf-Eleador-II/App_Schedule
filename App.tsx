@@ -10,6 +10,7 @@ import SettingPage from './src/pages/SettingPage';
 
 import { withExpoSnack } from 'nativewind';
 import NotificationsHandler from './src/notification/NotificationsHandler';
+import { View } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ const App = () => {
   NotificationsHandler();
   return (
     <NavigationContainer>
+      <View style={{height: 20, backgroundColor: 'black'}}></View>
       <Stack.Navigator initialRouteName='Schedule'>
         <Stack.Screen name='Schedule' component={SchedulePage} options={{ headerShown: false }} />
         <Stack.Screen name='Lesson' component={LessonPage} options={{ headerShown: false }} />

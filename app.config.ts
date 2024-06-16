@@ -13,7 +13,7 @@ const widgetConfig: WithAndroidWidgetsParams = {
       description: 'Widget',
       previewImage: './assets/widget-preview/ScheduleWidgetPreview.png',
 
-      updatePeriodMillis: 3600000,
+      updatePeriodMillis: 1800000,
       resizeMode: 'horizontal|vertical'
     },
   ],
@@ -21,7 +21,7 @@ const widgetConfig: WithAndroidWidgetsParams = {
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'App_Schedule',
+  name: 'Расписание студента',
   slug: 'App_Schedule',
   version: '1.0.0',
   orientation: 'portrait',

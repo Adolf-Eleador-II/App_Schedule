@@ -1,5 +1,6 @@
 import * as Notifications from 'expo-notifications';
-import { Lesson, getIndexWeek } from '../class/Lesson';
+import { type Lesson } from '../class/LessonsClass';
+import { getIndexWeek } from '../getIndexWeek';
 
 function convertTimeToTrigger(week: number, day: number, time:string, timeBefore = 60){
   const countWeek = 2;
@@ -22,7 +23,7 @@ export async function addSchedulePushNotification(lesson: Lesson) {
       title: `${lesson.name}`,
       body: `${lesson.auditorium} ${lesson.teacher}`,
     },
-    trigger:  { date: convertTimeToTrigger(lesson.week, lesson.day, lesson.time[0]) },
+    trigger:  { date: convertTimeToTrigger(lesson.week, lesson.day, lesson.time[0], lesson.beforeBegin) },
     
   });
   return identifier;
@@ -39,5 +40,5 @@ export async function cancelAllPushNotification() {
 
 export async function getAllPushNotification() {
   const identifiers = await Notifications.getAllScheduledNotificationsAsync();
-  identifiers.map((x, i) => { console.log(i+' '+x.identifier+'\n\t'+x.content.title+'\n\t'+new Date(x.trigger.value)) });
+  // identifiers.map((x, i) => { console.log(i+' '+x.identifier+'\n\t'+x.content.title+'\n\t'+new Date(x.trigger.value)) });
 }

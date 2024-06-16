@@ -2,13 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addSchedulePushNotification, cancelPushNotification } from "../notification/ScheduleNotifications";
 
 export const DayOfWeekName = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'] as const;
-export type DayOfWeekNameType = typeof DayOfWeekName[number];;
-
-export interface LessonsDay {
-  name: DayOfWeekNameType;
-  hiddenOff: boolean;
-  lessons: Lesson[];
-}
+export type DayOfWeekNameType = typeof DayOfWeekName[number];
 
 export interface Lesson {
   period: number;
@@ -21,46 +15,45 @@ export interface Lesson {
 
   hidden: boolean;
   notification: boolean;
-  identifiersPushNotification?: string | undefined;
+  beforeBegin: number;
+  notificationIdentifiers?: string | undefined;
 }
 
-export class LessonClass {
+export interface LessonsDay {
+  name: DayOfWeekNameType;
+  hiddenOff: boolean;
+  lessons: Lesson[];
+}
+
+export class LessonsClass {
   private lessons: Lesson[];
   // console.log("Lesson debag:\n" + JSON.stringify(this.lessons, null, 2));
 
-  async replace(oldLesson: Lesson, newLesson: Lesson) {
-    if (newLesson.notification) newLesson.identifiersPushNotification = await addSchedulePushNotification(newLesson);
+  async copy(newLesson: Lesson) {
+    if (newLesson.notification) newLesson.notificationIdentifiers = await addSchedulePushNotification(newLesson);
     await this.load();
-    if (oldLesson) {
-      const i = this.lessons.findIndex((x: Lesson) => {
-        return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
-      });
 
-      const _ = this.lessons[i]?.identifiersPushNotification;
-      if (_ != undefined) cancelPushNotification(_);
-      if (i != -1) this.lessons.splice(i, 1);
+    const i = this.lessons.findIndex((x: Lesson) => {
+      return (x.day == newLesson.day && x.week == newLesson.week && x.period == newLesson.period)
+    });
+    if (i != -1) this.lessons[i] = newLesson;
+    else this.lessons.push(newLesson);
 
-      const j = this.lessons.findIndex((x: Lesson) => {
-        return (x.day == newLesson.day && x.week == newLesson.week && x.period == newLesson.period)
-      });
-      if (j != -1) this.lessons[j] = newLesson;
-      else this.lessons.push(newLesson);
-    }
-    else {
-      this.lessons.push(newLesson);
-    }
     await this.save();
   }
-
   async remove(oldLesson: Lesson) {
     await this.load();
     const i = this.lessons.findIndex((x: Lesson) => {
       return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
     });
-    const _ = this.lessons[i]?.identifiersPushNotification;
+    const _ = this.lessons[i]?.notificationIdentifiers;
     if (_ != undefined) cancelPushNotification(_);
     if (i != -1) this.lessons.splice(i, 1);
     await this.save();
+  }
+  async replace(newLesson: Lesson, oldLesson?: Lesson) {
+    await this.copy(newLesson);
+    if (oldLesson) await this.remove(oldLesson);
   }
 
   getDayLessons(day: DayOfWeekNameType, indexWeek: number): Lesson[] {
@@ -70,7 +63,6 @@ export class LessonClass {
         return (a.period > b.period) ? 1 : -1
       });
   }
-
   getWeekLessons(indexWeek: number): LessonsDay[] {
     return DayOfWeekName.map(x => ({
       name: x,
@@ -89,13 +81,10 @@ export class LessonClass {
       console.log('error\n' + e)
     }
   }
-
   async loadDefault() {
-    await this.load();
     this.lessons = lessonsDefault;
     await this.save();
   }
-
   async save() {
     // console.log('save');
     try {
@@ -104,7 +93,6 @@ export class LessonClass {
       console.log('error\n' + e)
     }
   }
-
   async removeAll() {
     try {
       await AsyncStorage.removeItem('lessons');
@@ -115,7 +103,7 @@ export class LessonClass {
 
   async allNotificationOff() {
     await this.load();
-    this.lessons.map((x) => { x.notification = false; x.identifiersPushNotification = undefined })
+    this.lessons.map((x) => { x.notification = false; x.notificationIdentifiers = undefined })
     await this.save();
   }
 
@@ -123,18 +111,6 @@ export class LessonClass {
     this.lessons = [];
     // this.load();
   }
-}
-
-export function getIndexWeek(): number {
-  const countWeek = 2;
-  const now = new Date();
-  let date;
-  if (now.getMonth() < 9) date = new Date(`${now.getFullYear() - 1}-09-01T00:00:00.000Z`);
-  else date = new Date(`${now.getFullYear()}-09-01T00:00:00.000Z`);
-
-  const weekIndex = Math.round((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24 * 7)) % countWeek;
-
-  return +weekIndex + 1;
 }
 
 const lessonsDefault = [
@@ -189,7 +165,7 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Системы управления базами данных (лаб)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin',
+    teacher: 'Кузин Дмитрий Александрович',
     hidden: false,
     notification: false
   },
@@ -200,7 +176,7 @@ const lessonsDefault = [
     time: ['11:30', '12:50'],
     name: 'Системы управления базами данных (лаб)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin',
+    teacher: 'Кузин Дмитрий Александрович',
     hidden: false,
     notification: false
   },
@@ -211,7 +187,7 @@ const lessonsDefault = [
     time: ['8:30', '9:50'],
     name: 'Системы управления базами данных (лек)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin',
+    teacher: 'Кузин Дмитрий Александрович',
     hidden: false,
     notification: false
   },
@@ -222,7 +198,7 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Системы управления базами данных (лек)',
     auditorium: 'ЭОиДОТ',
-    teacher: 'Dmitrii Kuzin',
+    teacher: 'Кузин Дмитрий Александрович',
     hidden: false,
     notification: false
   },
@@ -233,7 +209,7 @@ const lessonsDefault = [
     time: ['13:20', '14:40'],
     name: 'Технологии мультимедиа (лек)',
     auditorium: 'У106',
-    teacher: '',
+    teacher: 'Брагинский Михаил Яковлевич',
     hidden: false,
     notification: false
   },
@@ -244,7 +220,7 @@ const lessonsDefault = [
     time: ['14:50', '16:10'],
     name: 'Технологии мультимедиа (лек)',
     auditorium: 'У105',
-    teacher: ''
+    teacher: 'Брагинский Михаил Яковлевич'
   },
   // {
   //   period: 2,
@@ -253,7 +229,7 @@ const lessonsDefault = [
   //   time: ['10:00', '11:20'],
   //   name: 'ФДТ: Основы подготовки технической документации (пр)',
   //   auditorium: 'У408',
-  //   teacher: ''
+  //   teacher: 'Гришмановская Ольга Николаевна'
   // },
   // {
   //   period: 3,
@@ -262,7 +238,7 @@ const lessonsDefault = [
   //   time: ['11:30', '12:50'],
   //   name: 'Система управления мехатронными комплексами (лаб)',
   //   auditorium: 'У403',
-  //   teacher: ''
+  //   teacher: 'Назаров Евгений Владимирович'
   // },
   {
     period: 4,
@@ -271,7 +247,7 @@ const lessonsDefault = [
     time: ['13:20', '14:40'],
     name: 'Технологии мультимедиа (лаб)',
     auditorium: 'У105',
-    teacher: '',
+    teacher: 'Брагинский Михаил Яковлевич',
     hidden: false,
     notification: false
   },
@@ -282,7 +258,7 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Математические методы искусственного интелекта (лек)',
     auditorium: 'У903',
-    teacher: '',
+    teacher: 'Тараканов Дмитрий Викторович',
     hidden: false,
     notification: false
   },
@@ -293,7 +269,7 @@ const lessonsDefault = [
     time: ['11:30', '12:50'],
     name: 'Математические методы искусственного интелекта (лек)',
     auditorium: 'У903',
-    teacher: '',
+    teacher: 'Тараканов Дмитрий Викторович',
     hidden: false,
     notification: false
   },
@@ -304,7 +280,7 @@ const lessonsDefault = [
     time: ['10:00', '11:20'],
     name: 'Математические методы искусственного интелекта (лаб)',
     auditorium: 'У903',
-    teacher: 'Брыкин',
+    teacher: 'Брыкин Валентин Валерьевич',
     hidden: false,
     notification: false
   },
@@ -315,7 +291,7 @@ const lessonsDefault = [
     time: ['11:30', '12:50'],
     name: 'Математические методы искусственного интелекта (лаб)',
     auditorium: 'У903',
-    teacher: 'Брыкин',
+    teacher: 'Брыкин Валентин Валерьевич',
     hidden: false,
     notification: false
   },

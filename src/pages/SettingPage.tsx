@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import * as LessonClass from '../class/Lesson'
+import * as LessonClass from '../class/LessonsClass'
 
 import { Button, ButtonText } from '../components/Button';
 import { InputParameter } from '../components/Input';
@@ -15,17 +15,17 @@ const StyledText = styled(Text)
 
 
 export default function SettingPage({ navigation }: any) {
-  const localLessonClass = new LessonClass.LessonClass();
+  const localLessonsClass = new LessonClass.LessonsClass();
 
   const loadDefault = () => {
-    localLessonClass.loadDefault();
+    localLessonsClass.loadDefault();
   }
   const deleteLessons = async () => {
-    await localLessonClass.removeAll();
+    await localLessonsClass.removeAll();
     await Notifications.cancelAllPushNotification();
   }
   const notificationOffLessons = async () => {
-    localLessonClass.allNotificationOff();
+    localLessonsClass.allNotificationOff();
     await Notifications.cancelAllPushNotification();
   }
 

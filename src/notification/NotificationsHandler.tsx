@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef, ReactNode } from 'react';
-import { View, Text, Platform, ScrollView } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import { Platform} from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
-import { styled } from 'nativewind';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

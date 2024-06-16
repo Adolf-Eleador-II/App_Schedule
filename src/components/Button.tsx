@@ -15,8 +15,8 @@ interface ButtonTextProps {
 export function ButtonText({ name, onPress: action }: ButtonTextProps): ReactNode {
   return (
     <Pressable onPress={action}>
-      <StyledView className='p-1 border-2 border-gray-200'>
-        <StyledText className='text-1xl text-center text-white'>{name}</StyledText>
+      <StyledView className='border-2 p-1 border-gray-200'>
+        <StyledText className='text-base text-center text-white'>{name}</StyledText>
       </StyledView>
     </Pressable>
   )
@@ -30,8 +30,8 @@ interface ButtonProps {
 export function Button({ children, onPress: action }: ButtonProps): ReactNode {
   return (
     <Pressable onPress={action}>
-      <StyledView className='p-1 border-2 border-gray-200'>
-        {children}
+      <StyledView className='border-2 p-1 border-gray-200'>
+        { children }
       </StyledView>
     </Pressable>
   )

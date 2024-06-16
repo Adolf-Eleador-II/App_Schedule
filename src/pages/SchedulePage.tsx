@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import React, { useState, useCallback, ReactNode } from 'react';
 import { View, Text, ScrollView, Pressable } from 'react-native';
-import * as LessonClass from '../class/Lesson'
+import * as LessonClass from '../class/LessonsClass'
 
 import Card from '../components/Card';
 import { Button, ButtonText } from '../components/Button';
@@ -10,22 +10,19 @@ import { SelectValueLabel } from '../components/Select';
 import { styled } from 'nativewind';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { widgetUpdate } from '../widget/ScheduleWidget';
+import { getIndexWeek } from '../getIndexWeek';
 const StyledView = styled(View)
 const StyledText = styled(Text)
 
 export default function SchedulePage({ navigation }: any): ReactNode {
-  const localLessonClass = new LessonClass.LessonClass();
+  const localLessonsClass = new LessonClass.LessonsClass();
   const [lessons, setLessons] = useState<LessonClass.LessonsDay[]>([]);
   const weekList = ['Неделя-1', 'Неделя-2'];
-  const [weekIndex, setWeekIndex] = useState<number>(LessonClass.getIndexWeek() - 1);
+  const [weekIndex, setWeekIndex] = useState<number>(getIndexWeek() - 1);
 
   const load = async () => {
-    await localLessonClass.load();
-    setLessons(localLessonClass.getWeekLessons(weekIndex + 1));
-  }
-
-  const SettingButton = () => {
-    navigation.navigate('Setting');
+    await localLessonsClass.load();
+    setLessons(localLessonsClass.getWeekLessons(weekIndex + 1));
   }
 
   useFocusEffect(useCallback(() => { load(); widgetUpdate(); }, [weekIndex]));
@@ -37,7 +34,7 @@ export default function SchedulePage({ navigation }: any): ReactNode {
         <StyledView className='flex flex-row space-x-2'>
           <StyledView><SelectValueLabel options={weekList} onSelect={setWeekIndex} defaultIndex={weekIndex} /></StyledView>
           <StyledView><Button onPress={() => { navigation.navigate('Lesson', {}) }}><Feather name='plus' size={23} color="white" /></Button></StyledView>
-          <StyledView><Button onPress={SettingButton}><AntDesign name='setting' size={23} color="white" /></Button></StyledView>
+          <StyledView><Button onPress={() => { navigation.navigate('Setting') }}><AntDesign name='setting' size={23} color="white" /></Button></StyledView>
         </StyledView>
       </StyledView>
 
@@ -46,10 +43,6 @@ export default function SchedulePage({ navigation }: any): ReactNode {
           return <ScheduleForDay key={x.name} dayOfWeek={i} dayLessonList={x.lessons} navigation={navigation} hiddenOff={x.hiddenOff} />
         })}
       </ScrollView>
-
-      {/* <StyledView className='flex flex-row items-stretch justify-between space-x-2'>
-        <ButtonText name={"Загрузить"} onPress={load} />
-      </StyledView> */}
 
     </StyledView>
   )

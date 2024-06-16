@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlexWidget, ListWidget, TextWidget, requestWidgetUpdate } from 'react-native-android-widget';
-import * as LessonClass from '../class/Lesson'
+import * as LessonClass from '../class/LessonsClass'
+import { getIndexWeek } from '../getIndexWeek';
 
 interface ScheduleWidgetProps {
   dayName: string,
@@ -11,9 +12,9 @@ export async function widgetUpdate() {
   console.log('widget update')
   const today = new Date().getDay();
   
-  const localLessonClass = new LessonClass.LessonClass();
-  await localLessonClass.load();
-  const dayLessons = localLessonClass.getDayLessons(LessonClass.DayOfWeekName[today], LessonClass.getIndexWeek());
+  const localLessonsClass = new LessonClass.LessonsClass();
+  await localLessonsClass.load();
+  const dayLessons = localLessonsClass.getDayLessons(LessonClass.DayOfWeekName[today], getIndexWeek());
   requestWidgetUpdate({
     widgetName: 'Schedule',
     renderWidget: () => <ScheduleWidget lessons={dayLessons} dayName={LessonClass.DayOfWeekName[today]} />,
@@ -23,9 +24,7 @@ export async function widgetUpdate() {
 
 export function ScheduleWidget({ lessons = [], dayName }: ScheduleWidgetProps) {
   return (
-      <ListWidget
-        style={{ backgroundColor: '#374151', height: 'match_parent', width: 'match_parent' }}
-      >
+      <ListWidget style={{ backgroundColor: '#374151', height: 'match_parent', width: 'match_parent' }}>
       <TextWidget text={`${dayName}`}
         style={{
           width: 'match_parent',
@@ -33,7 +32,7 @@ export function ScheduleWidget({ lessons = [], dayName }: ScheduleWidgetProps) {
           backgroundColor: '#374151',
           color: '#e5e7eb'
         }}/>
-        {lessons.map((lesson: LessonClass.Lesson, i: number) => (
+        { lessons.map((lesson: LessonClass.Lesson, i: number) => (
           <FlexWidget key={i}
             style={{
               width: 'match_parent',

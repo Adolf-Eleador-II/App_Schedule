@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import * as LessonClass from '../class/Lesson'
+import * as LessonClass from '../class/LessonsClass'
 
 import { Button } from '../components/Button';
 import { InputParameter } from '../components/Input';
@@ -17,13 +17,13 @@ interface LessonPageProps {
 }
 
 export default function LessonPage({ route, navigation }: LessonPageProps): ReactNode {
-  const localLessonClass = new LessonClass.LessonClass();
+  const localLessonsClass = new LessonClass.LessonsClass();
   const { thisLesson } = route.params;
 
-  const [period, setPeriod] = useState<string>(thisLesson?.period.toString() ?? '1');
+  const [period, setPeriod] = useState<string>((thisLesson?.period ?? 1).toString());
   const dayList = LessonClass.DayOfWeekName.map((x: string) => x);
   const [day, setDay] = useState<number>(thisLesson?.day ?? 1);
-  const weekList = ['Еженедльно','Неделя-1', 'Неделя-2'];
+  const weekList = ['Еженедльно', 'Неделя-1', 'Неделя-2'];
   const [week, setWeek] = useState<number>(thisLesson?.week ?? 0);
   const [name, setName] = useState<string>(thisLesson?.name ?? '');
   const [timeBegin, setTimeBegin] = useState<string>(thisLesson?.time[0] ?? '');
@@ -32,6 +32,10 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
   const [teacher, setTeacher] = useState<string>(thisLesson?.teacher ?? '');
   const [hidden, setHidden] = useState<boolean>(thisLesson?.hidden ?? false)
   const [notification, setNotification] = useState<boolean>(thisLesson?.notification ?? true)
+  const [beforBegin, setBeforBegin] = useState<string>((thisLesson?.beforBegin ?? 60).toString())
+
+  const hiddenChange = () => { setHidden(!hidden) }
+  const notificationChange = () => { setNotification(!notification) }
 
   const saveLesson = async () => {
     const lesson = {
@@ -44,20 +48,18 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
       time: [timeBegin, timeEnd],
       hidden: hidden,
       notification: notification,
+      beforeBegin: Number(beforBegin),
     } as LessonClass.Lesson;
 
-    await localLessonClass.replace(thisLesson, lesson);
+    await localLessonsClass.replace(lesson, thisLesson);
     navigation.goBack();
+  }
+  const copyLesson = async () => {
+    
   }
   const deleteLesson = async () => {
-    await localLessonClass.remove(thisLesson);
+    await localLessonsClass.remove(thisLesson);
     navigation.goBack();
-    }
-  const hiddenChange = () => {
-      setHidden(!hidden);
-  }
-  const notificationChange = () => {
-    setNotification(!notification);
   }
 
   return (
@@ -93,15 +95,15 @@ export default function LessonPage({ route, navigation }: LessonPageProps): Reac
           </StyledView>
           <StyledView><InputParameter label={'Начало'} value={timeBegin} onChange={setTimeBegin} /></StyledView>
           <StyledView><InputParameter label={'Конец'} value={timeEnd} onChange={setTimeEnd} /></StyledView>
-          {/* <StyledView><Input label={'Уведомлять за'} value={Period} action={setPeriod} /></StyledView> */}
+          <StyledView><InputParameter label={'Уведомлять за'} value={beforBegin} onChange={setBeforBegin} /></StyledView>
         </StyledView>
         {/* <StyledView className='flex space-y-1'> */}
         {/* <StyledView><Input label={'Цвет'} value={Period} action={setPeriod} /></StyledView> */}
         {/* <StyledView><Input label={'Заметка'} value={Period} action={setPeriod} /></StyledView> */}
         {/* </StyledView> */}
         <StyledView className='flex flex-row justify-between space-x-2'>
-        <Button onPress={hiddenChange}><Feather name={ hidden ? 'eye-off' : 'eye'} size={23} color='white' /></Button>
-        <Button onPress={notificationChange}><Feather name={ notification ? 'bell' : 'bell-off'} size={23} color='white' /></Button>
+          <Button onPress={hiddenChange}><Feather name={hidden ? 'eye-off' : 'eye'} size={23} color='white' /></Button>
+          <Button onPress={notificationChange}><Feather name={notification ? 'bell' : 'bell-off'} size={23} color='white' /></Button>
         </StyledView>
       </StyledView></ScrollView>
 
