@@ -21,7 +21,6 @@ export interface Lesson {
 
 export interface LessonsDay {
   name: DayOfWeekNameType;
-  hiddenOff: boolean;
   lessons: Lesson[];
 }
 
@@ -52,8 +51,8 @@ export class LessonsClass {
     await this.save();
   }
   async replace(newLesson: Lesson, oldLesson?: Lesson) {
-    await this.copy(newLesson);
     if (oldLesson) await this.remove(oldLesson);
+    await this.copy(newLesson);
   }
 
   getDayLessons(day: DayOfWeekNameType, indexWeek: number): Lesson[] {
@@ -66,7 +65,6 @@ export class LessonsClass {
   getWeekLessons(indexWeek: number): LessonsDay[] {
     return DayOfWeekName.map(x => ({
       name: x,
-      hiddenOff: false,
       lessons: this.getDayLessons(x, indexWeek)
     }) as LessonsDay);
   }

@@ -7,21 +7,6 @@ interface ScheduleWidgetProps {
   dayName: string,
   lessons?: LessonClass.Lesson[]
 }
-
-export async function widgetUpdate() {
-  console.log('widget update')
-  const today = new Date().getDay();
-  
-  const localLessonsClass = new LessonClass.LessonsClass();
-  await localLessonsClass.load();
-  const dayLessons = localLessonsClass.getDayLessons(LessonClass.DayOfWeekName[today], getIndexWeek());
-  requestWidgetUpdate({
-    widgetName: 'Schedule',
-    renderWidget: () => <ScheduleWidget lessons={dayLessons} dayName={LessonClass.DayOfWeekName[today]} />,
-    widgetNotFound: () => { }
-  })
-}
-
 export function ScheduleWidget({ lessons = [], dayName }: ScheduleWidgetProps) {
   return (
       <ListWidget style={{ backgroundColor: '#374151', height: 'match_parent', width: 'match_parent' }}>
@@ -59,3 +44,18 @@ export function ScheduleWidget({ lessons = [], dayName }: ScheduleWidgetProps) {
       </ListWidget>
   );
 }
+
+export async function widgetUpdate() {
+  console.log('widget update')
+  const today = new Date().getDay();
+  
+  const localLessonsClass = new LessonClass.LessonsClass();
+  await localLessonsClass.load();
+  const dayLessons = (localLessonsClass.getDayLessons(LessonClass.DayOfWeekName[today], getIndexWeek())).filter(lesson => !lesson?.hidden);
+  requestWidgetUpdate({
+    widgetName: 'Schedule',
+    renderWidget: () => <ScheduleWidget lessons={dayLessons} dayName={LessonClass.DayOfWeekName[today]} />,
+    widgetNotFound: () => { }
+  })
+}
+

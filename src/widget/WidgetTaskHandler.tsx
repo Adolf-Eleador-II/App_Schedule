@@ -19,7 +19,7 @@ export async function WidgetTaskHandler(props: WidgetTaskHandlerProps) {
   
   const localLessonsClass = new LessonClass.LessonsClass();
   await localLessonsClass.load();
-  const dayLessons = localLessonsClass.getDayLessons(LessonClass.DayOfWeekName[today], getIndexWeek());
+  const dayLessons = (localLessonsClass.getDayLessons(LessonClass.DayOfWeekName[today], getIndexWeek())).filter(lesson => !lesson?.hidden);
 
   // console.log("Lesson debag:\n" + JSON.stringify(dayLessons, null, 2));
 
@@ -27,10 +27,10 @@ export async function WidgetTaskHandler(props: WidgetTaskHandlerProps) {
     case 'WIDGET_RESIZED':
     case 'WIDGET_ADDED':
     case 'WIDGET_UPDATE':
-    case 'WIDGET_CLICK':
-        props.renderWidget(<Widget lessons={ dayLessons } dayName={ LessonClass.DayOfWeekName[today] }/>);
+      props.renderWidget(<Widget lessons={ dayLessons } dayName={ LessonClass.DayOfWeekName[today] }/>);
       break;
       
+    case 'WIDGET_CLICK':
     case 'WIDGET_DELETED':
     default:
       break;

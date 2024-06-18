@@ -18,15 +18,31 @@ function convertTimeToTrigger(week: number, day: number, time:string, timeBefore
 }
 
 export async function addSchedulePushNotification(lesson: Lesson) {
+  console.log('notification create')
   const identifier = await Notifications.scheduleNotificationAsync({
     content: {
       title: `${lesson.name}`,
       body: `${lesson.auditorium} ${lesson.teacher}`,
+      data: {week: lesson.week, day: lesson.day, time: lesson.time[0], beforeBegin: lesson.beforeBegin}
     },
     trigger:  { date: convertTimeToTrigger(lesson.week, lesson.day, lesson.time[0], lesson.beforeBegin) },
     
   });
   return identifier;
+}
+
+export async function updateSchedulePushNotification(notification: string) {
+  console.log('notification update');
+  const request = JSON.parse(notification).request;
+  const identifier = await Notifications.scheduleNotificationAsync({
+    identifier: request.identifier,
+    content: {
+      title: request.content.title,
+      body: request.content.body,
+      data: request.content.data
+    },
+    trigger:  { date: convertTimeToTrigger(request.content.data.week, request.content.data.day, request.content.data.time, request.content.data.beforeBegin) },
+  });
 }
 
 export async function cancelPushNotification(identifier: string | undefined) {
@@ -40,5 +56,5 @@ export async function cancelAllPushNotification() {
 
 export async function getAllPushNotification() {
   const identifiers = await Notifications.getAllScheduledNotificationsAsync();
-  // identifiers.map((x, i) => { console.log(i+' '+x.identifier+'\n\t'+x.content.title+'\n\t'+new Date(x.trigger.value)) });
+  identifiers.map((x, i) => { console.log(i+' '+x.identifier+'\n\t'+x.content.title+'\n\t'+new Date(x.trigger.value)) });
 }

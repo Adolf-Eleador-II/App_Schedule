@@ -40,7 +40,7 @@ export default function SchedulePage({ navigation }: any): ReactNode {
 
       <ScrollView >
         {lessons.map((x: LessonClass.LessonsDay, i: number) => {
-          return <ScheduleForDay key={x.name} dayOfWeek={i} dayLessonList={x.lessons} navigation={navigation} hiddenOff={x.hiddenOff} />
+          return <ScheduleForDay key={x.name} dayOfWeek={i} dayLessonList={x.lessons} navigation={navigation} />
         })}
       </ScrollView>
 
@@ -52,14 +52,11 @@ interface ScheduleForDayProps {
   dayOfWeek: number;
   dayLessonList: LessonClass.Lesson[];
   navigation: any;
-  hiddenOff: boolean;
 }
 
-function ScheduleForDay({ dayOfWeek, dayLessonList, navigation, hiddenOff }: ScheduleForDayProps): ReactNode {
-  const [hidden, setHidden] = useState<boolean>(hiddenOff)
-  const hiddenChange = () => {
-    setHidden(!hidden);
-  }
+function ScheduleForDay({ dayOfWeek, dayLessonList, navigation }: ScheduleForDayProps): ReactNode {
+  const [hidden, setHidden] = useState<boolean>(false)
+  const hiddenChange = () => { setHidden(!hidden) }
   let countHidden = 0;
   dayLessonList.map((x) => { if (x.hidden) countHidden++ })
   const buttonHide = (countHidden > 0)

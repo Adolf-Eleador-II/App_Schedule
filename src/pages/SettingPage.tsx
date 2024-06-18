@@ -43,10 +43,10 @@ export default function SettingPage({ navigation }: any) {
           <StyledView><ButtonText name={"Импорт"} onPress={() => { return 0 }} /></StyledView>
         </StyledView> */}
 
-        {/* <StyledView className='flex space-y-1'>
+        <StyledView className='flex space-y-1'>
           <StyledView><ButtonText name="Отменить все уведомления log" onPress={async () => { await Notifications.cancelAllPushNotification(); }}/></StyledView>
           <StyledView><ButtonText name="Показать все уведомления log" onPress={async () => { await Notifications.getAllPushNotification(); }}/></StyledView>
-        </StyledView> */}
+        </StyledView>
 
         <StyledView className='flex space-y-1'>
           <StyledView><ButtonText name={"Загрузить заготовку"} onPress={loadDefault} /></StyledView>

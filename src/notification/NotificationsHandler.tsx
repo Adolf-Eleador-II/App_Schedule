@@ -3,8 +3,12 @@ import { Platform} from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import { updateSchedulePushNotification } from './ScheduleNotifications';
 
 Notifications.setNotificationHandler({
+  handleSuccess: notificationId => {
+    updateSchedulePushNotification(notificationId);
+  },
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: false,

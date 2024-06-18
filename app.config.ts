@@ -7,7 +7,7 @@ const widgetConfig: WithAndroidWidgetsParams = {
       name: 'Schedule',
       minWidth: '120dp',
       minHeight: '120dp',
-      targetCellWidth: 3,
+      targetCellWidth: 2,
       targetCellHeight: 1,
 
       description: 'Widget',
@@ -26,7 +26,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/icon.png',
-  userInterfaceStyle: 'dark',
+  userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/splash.png',
     resizeMode: 'contain',
