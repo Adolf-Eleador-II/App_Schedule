@@ -28,7 +28,7 @@ export default function SchedulePage({ navigation }: any): ReactNode {
   useFocusEffect(useCallback(() => { load(); widgetUpdate(); }, [weekIndex]));
 
   return (
-    <StyledView className='flex-1 flex-col justify-between space-y-3 p-3 border-8 bg-gray-700 border-gray-600'>
+    <StyledView className='flex-1 flex-col p-3 border-8 bg-gray-700 border-gray-600'>
       <StyledView className='flex flex-row justify-between items-center space-x-2'>
         <StyledText className='text-3xl text-white'>Расписание:</StyledText>
         <StyledView className='flex flex-row space-x-2'>
@@ -64,7 +64,7 @@ function ScheduleForDay({ dayOfWeek, dayLessonList, navigation }: ScheduleForDay
     : [];
   if (dayLessonList.length != 0)
     return (
-      <StyledView className='flex space-y-1 mt-3'>
+      <StyledView className='flex mt-3 space-y-1'>
         <StyledView className='flex flex-row items-center justify-between space-x-2'>
           <StyledText className='text-2xl text-white'>{LessonClass.DayOfWeekName[dayOfWeek]}:</StyledText>
           <StyledView className='flex flex-row space-x-2'>

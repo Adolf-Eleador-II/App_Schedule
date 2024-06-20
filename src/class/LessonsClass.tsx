@@ -13,7 +13,9 @@ export interface Lesson {
   auditorium: string;
   teacher: string;
 
-  hidden: boolean;
+  hidden?: boolean;
+  temporary?: boolean;
+
   notification: boolean;
   beforeBegin: number;
   notificationIdentifiers?: string | undefined;
@@ -46,7 +48,7 @@ export class LessonsClass {
       return (x.day == oldLesson.day && x.week == oldLesson.week && x.period == oldLesson.period)
     });
     const _ = this.lessons[i]?.notificationIdentifiers;
-    if (_ != undefined) cancelPushNotification(_);
+    cancelPushNotification(_);
     if (i != -1) this.lessons.splice(i, 1);
     await this.save();
   }

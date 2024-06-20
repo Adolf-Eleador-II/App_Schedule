@@ -52,6 +52,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     }
   },
   owner: 'user135792468',
-  plugins: [['react-native-android-widget', widgetConfig]],
+  plugins: [
+    ['react-native-android-widget', widgetConfig],
+    [
+      'expo-notifications',
+      {
+        icon: './assets/icon copy.png',
+        defaultChannel: 'default',
+      }
+    ]
+  ],
 });
 

@@ -2,7 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { type Lesson } from '../class/LessonsClass';
 import { getIndexWeek } from '../getIndexWeek';
 
-function convertTimeToTrigger(week: number, day: number, time:string, timeBefore = 60){
+function convertTimeToTrigger(week: number, day: number, time: string, timeBefore = 60){
   const countWeek = 2;
   const now = new Date(Date.now())
   const _hour = +time.split(':')[0];
@@ -56,5 +56,5 @@ export async function cancelAllPushNotification() {
 
 export async function getAllPushNotification() {
   const identifiers = await Notifications.getAllScheduledNotificationsAsync();
-  identifiers.map((x, i) => { console.log(i+' '+x.identifier+'\n\t'+x.content.title+'\n\t'+new Date(x.trigger.value)) });
+  // identifiers.map((x, i) => { console.log(i+' '+x.identifier+'\n\t'+x.content.title+'\n\t'+new Date(x.trigger.value)) });
 }
