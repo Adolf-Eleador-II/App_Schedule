@@ -16,6 +16,9 @@ const StyledText = styled(Text)
 
 export default function SettingPage({ navigation }: any) {
   const localLessonsClass = new LessonClass.LessonsClass();
+  const [countWeek, setCountWeek] = useState<string>('2');
+  const weekList = ['Неделя-1', 'Неделя-2'];
+  const [weekIndex, setWeekIndex] = useState<number>(1);
 
   const loadDefault = () => {
     localLessonsClass.loadDefault();
@@ -36,7 +39,7 @@ export default function SettingPage({ navigation }: any) {
         <StyledText className={'text-3xl text-white'}>Настройки:</StyledText>
       </StyledView>
 
-      <ScrollView><StyledView className={'flex-1 space-y-3 bg-gray-700'}>
+      <ScrollView><StyledView className={'flex-1 space-y-5 bg-gray-700'}>
 
         {/* <StyledView className='flex space-y-1'>
           <StyledView><ButtonText name={"Экспорт"} onPress={() => { return 0 }} /></StyledView>
@@ -50,11 +53,19 @@ export default function SettingPage({ navigation }: any) {
 
         <StyledView className='flex space-y-1'>
           <StyledView><ButtonText name={"Загрузить заготовку"} onPress={loadDefault} /></StyledView>
-          <StyledView><ButtonText name={"Сброс расписания"} onPress={deleteLessons} /></StyledView>
+          <StyledView><ButtonText name={"Отчистить расписание"} onPress={deleteLessons} /></StyledView>
           <StyledView><ButtonText name={"Отменить все уведомления"} onPress={notificationOffLessons} /></StyledView>
         </StyledView>
 
-
+        {/* <StyledView className='flex space-y-1'>
+          <StyledView><InputParameter label={'Количество недель'} value={countWeek} onChange={setCountWeek} /></StyledView>
+          <StyledView><SelectLabel
+              label='Текущая неделя'
+              options={weekList}
+              defaultIndex={weekIndex}
+              onSelect={setWeekIndex}
+            /></StyledView>
+        </StyledView> */}
 
 
       </StyledView></ScrollView>

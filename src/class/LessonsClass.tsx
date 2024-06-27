@@ -31,7 +31,7 @@ export class LessonsClass {
   // console.log("Lesson debag:\n" + JSON.stringify(this.lessons, null, 2));
 
   async copy(newLesson: Lesson) {
-    if (newLesson.notification) newLesson.notificationIdentifiers = await addSchedulePushNotification(newLesson);
+    newLesson.notificationIdentifiers = (newLesson.notification) ? await addSchedulePushNotification(newLesson) : '';
     await this.load();
 
     const i = this.lessons.findIndex((x: Lesson) => {

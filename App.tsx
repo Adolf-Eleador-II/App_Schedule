@@ -18,7 +18,7 @@ const App = () => {
   NotificationsHandler();
   return (
     <NavigationContainer>
-      <View style={{height: 20, backgroundColor: 'black'}}></View>
+      {/* <View style={{height: 20, backgroundColor: 'black'}}></View> */}
       <Stack.Navigator initialRouteName='Schedule'>
         <Stack.Screen name='Schedule' component={SchedulePage} options={{ headerShown: false }} />
         <Stack.Screen name='Lesson' component={LessonPage} options={{ headerShown: false }} />
@@ -28,8 +28,4 @@ const App = () => {
   );
 }
 
-// statusBarHidden: true, navigationBarHidden: true, autoHideHomeIndicator: true
-
 export default withExpoSnack(App);
-// eas build -p android --profile release_apk
-// eas build -p android --profile development

@@ -7,3 +7,7 @@ import 'expo-dev-client';
 
 registerRootComponent(App);
 registerWidgetTaskHandler(WidgetTaskHandler);
+
+// eas build -p android --profile release_apk
+// eas build -p android --profile development
+// https://github.com/Adolf-Eleador-II/App_Schedule
